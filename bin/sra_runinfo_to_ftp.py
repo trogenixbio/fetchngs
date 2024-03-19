@@ -123,6 +123,7 @@ def sra_runinfo_to_ftp(files_in, file_out):
     for file_in in files_in:
         runinfo, sample_header = parse_sra_runinfo(file_in)
         header.append(sample_header)
+
         for db_id, rows in runinfo.items():
             if db_id not in samplesheet:
                 samplesheet[db_id] = rows

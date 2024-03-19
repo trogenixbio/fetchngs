@@ -1,7 +1,5 @@
-
-process SRA_IDS_TO_RUNINFO {
-    tag "$id"
-    label 'error_retry'
+process SAMPLE_TO_JSON {
+    label 'process_single'
 
     conda "conda-forge::python=3.9.5"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -9,23 +7,15 @@ process SRA_IDS_TO_RUNINFO {
         'biocontainers/python:3.9--1' }"
 
     input:
-    val id
-    val fields
+    path samplesheet
 
     output:
-    path "*.tsv"          , emit: tsv
-    path "*.runinfo.json" , emit: json
-    path "versions.yml"   , emit: versions
+    path "samplesheet.json" , emit: json
 
     script:
-    def metadata_fields = fields ? "--ena_metadata_fields ${fields}" : ''
     """
-    echo $id > id.txt
-    sra_ids_to_runinfo.py \\
-        id.txt \\
-        ${id}.runinfo.tsv \\
-        ${id}.runinfo.json \\
-        $metadata_fields
+
+    sample_to_json.py $samplesheet samplesheet.json
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

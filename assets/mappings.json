@@ -1,0 +1,30 @@
+{
+    "field_mapping": {
+        "sample_accession": ["sample", "accession"],
+        "study_accession": ["study", "accession"],
+        "experiment_accession": ["experiment", "accession"],
+        "run_accession": ["run", "accession"],
+        "sample_alias": ["sample", "alias"],
+        "study_alias": ["study", "alias"],
+        "experiment_alias": ["experiment", "alias"],
+        "run_alias": ["run", "alias"],
+        "sample_title": ["sample", "title"],
+        "study_title": ["study", "title"],
+        "experiment_title": ["experiment", "title"],
+        "investigation_type": ["study", "study_type"],
+        "instrument_platform": ["experiment", "platform"],
+        "fastq_1": ["run", "file_1"],
+        "fastq_2": ["run", "file_2"],
+        "tax_id": ["sample", "taxon_id"]
+    },
+    "group_mapping": {
+        "base_count": "run",
+        "read_count": "run",
+        "scientific_name": "sample",
+        "fastq_md5": "run",
+        "fastq_bytes": "run",
+        "fastq_ftp": "run",
+        "fastq_galaxy": "run",
+        "fastq_aspera": "run"
+    }
+}

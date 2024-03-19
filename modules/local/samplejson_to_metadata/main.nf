@@ -1,6 +1,5 @@
-
-process SRA_IDS_TO_RUNINFO {
-    tag "$id"
+process SAMPLEJSON_TO_METADATA {
+    tag "$sample_json"
     label 'error_retry'
 
     conda "conda-forge::python=3.9.5"
@@ -9,23 +8,21 @@ process SRA_IDS_TO_RUNINFO {
         'biocontainers/python:3.9--1' }"
 
     input:
-    val id
-    val fields
+    path sample_json
+    path metadata_schema
+    path mappings_json
 
     output:
-    path "*.tsv"          , emit: tsv
-    path "*.runinfo.json" , emit: json
-    path "versions.yml"   , emit: versions
+    path "metadata.json"        , emit: metadata_json
+    path "versions.yml"         , emit: versions
 
     script:
-    def metadata_fields = fields ? "--ena_metadata_fields ${fields}" : ''
     """
-    echo $id > id.txt
-    sra_ids_to_runinfo.py \\
-        id.txt \\
-        ${id}.runinfo.tsv \\
-        ${id}.runinfo.json \\
-        $metadata_fields
+    samplejson_to_metadata.py \\
+        ${sample_json} \\
+        ${metadata_schema} \\
+        metadata.json \\
+        ${mappings_json}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

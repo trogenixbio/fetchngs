@@ -11,6 +11,8 @@ include { SRA_RUNINFO_TO_FTP      } from '../../modules/local/sra_runinfo_to_ftp
 include { ASPERA_CLI              } from '../../modules/local/aspera_cli'
 include { SRA_TO_SAMPLESHEET      } from '../../modules/local/sra_to_samplesheet'
 include { softwareVersionsToYAML  } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { SAMPLE_TO_JSON          } from '../../modules/local/sample_to_json'
+include { SAMPLEJSON_TO_METADATA      } from '../../modules/local/samplejson_to_metadata'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -126,8 +128,8 @@ workflow SRA {
                     def reads = fastq instanceof List ? fastq.flatten() : [ fastq ]
                     def meta_clone = meta.clone()
 
-                    meta_clone.fastq_1 = reads[0] ? "${params.outdir}/fastq/${reads[0].getName()}" : ''
-                    meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${params.outdir}/fastq/${reads[1].getName()}" : ''
+                    meta_clone.fastq_1 = reads[0] ? "${params.cloud_prefix}${params.outdir}/fastq/${reads[0].getName()}" : ''
+                    meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${params.cloud_prefix}${params.outdir}/fastq/${reads[1].getName()}" : ''
 
                     return meta_clone
             }
@@ -153,6 +155,14 @@ workflow SRA {
         .map { it.text.tokenize('\n').join('\n') }
         .collectFile(name:'samplesheet.csv', storeDir: "${params.outdir}/samplesheet")
         .set { ch_samplesheet }
+
+    SAMPLE_TO_JSON(ch_samplesheet)
+
+    SAMPLEJSON_TO_METADATA (
+            SAMPLE_TO_JSON.out.json,
+            params.metadata_schema,
+            params.mappings_json
+    )
 
     SRA_TO_SAMPLESHEET
         .out

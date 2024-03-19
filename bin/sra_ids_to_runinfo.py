@@ -89,6 +89,9 @@ ENA_METADATA_FIELDS = (
     "fastq_ftp",
     "fastq_galaxy",
     "fastq_aspera",
+    "cell_type",
+    "tissue_type",
+    "cell_line"
 )
 
 
@@ -324,6 +327,30 @@ class ENAMetadataFetcher:
         self._content_check(response, accession)
         return open_table(response, delimiter="\t")
 
+    def fetch_experiment_json(self, accession):
+        """
+        Fetch and save the metadata json belonging to the given experiment accession.
+
+        Args:
+            accession (str): An ENA experiment accession.
+
+        Returns:
+            csv.DictReader: A CSV reader instance of the metadata.
+
+        """
+        params = {**self._params, "accession": accession, "format": "json"}
+        response = fetch_url(f"https://www.ebi.ac.uk/ena/portal/api/filereport?{urlencode(params)}")
+        self._content_check(response, accession)
+        try:
+            # Parse the JSON string
+            data = json.loads(response.text().strip())
+            print(data)
+            # If you need to work with the data, you can do so here.
+        except json.JSONDecodeError as e:
+            print("Invalid JSON:", e)
+
+        return data
+
     @classmethod
     def _content_check(cls, response, identifier):
         """Check that the response has content or terminate."""
@@ -363,6 +390,12 @@ def parse_args(args=None):
         metavar="FILE_OUT",
         type=Path,
         help="Output file in tab-delimited format.",
+    )
+    parser.add_argument(
+        "json_out",
+        metavar="JSON_OUT",
+        type=Path,
+        help="Output file json.",
     )
     parser.add_argument(
         "-ef",
@@ -451,11 +484,11 @@ def get_ena_fields():
     ]
 
 
-def fetch_sra_runinfo(file_in, file_out, ena_metadata_fields):
+def fetch_sra_runinfo(file_in, file_out, json_out, ena_metadata_fields):
     seen_ids = set()
     run_ids = set()
     ena_fetcher = ENAMetadataFetcher(ena_metadata_fields)
-    with open(file_in, "r") as fin, open(file_out, "w") as fout:
+    with open(file_in, "r") as fin, open(file_out, "w") as fout, open(json_out, "w") as jout:
         writer = csv.DictWriter(fout, fieldnames=ena_metadata_fields, delimiter="\t")
         writer.writeheader()
         for line in fin:
@@ -477,6 +510,7 @@ def fetch_sra_runinfo(file_in, file_out, ena_metadata_fields):
                     if run_accession not in run_ids:
                         writer.writerow(row)
                         run_ids.add(run_accession)
+                        json.dump(ena_fetcher.fetch_experiment_json(accession), jout, indent=4)
 
 
 def main(args=None):
@@ -486,12 +520,13 @@ def main(args=None):
         logger.error(f"The given input file {args.file_in} was not found!")
         sys.exit(1)
     args.file_out.parent.mkdir(parents=True, exist_ok=True)
+    args.json_out.parent.mkdir(parents=True, exist_ok=True)
     ena_metadata_fields = validate_fields_parameter(
         args.ena_metadata_fields,
         valid_vals=get_ena_fields(),
         param_desc="--ena_metadata_fields",
     )
-    fetch_sra_runinfo(args.file_in, args.file_out, ena_metadata_fields)
+    fetch_sra_runinfo(args.file_in, args.file_out, args.json_out, ena_metadata_fields)
 
 
 if __name__ == "__main__":

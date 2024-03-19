@@ -1,5 +1,4 @@
-
-process SRA_IDS_TO_RUNINFO {
+process METADATA_MERGE {
     tag "$id"
     label 'error_retry'
 
@@ -9,23 +8,18 @@ process SRA_IDS_TO_RUNINFO {
         'biocontainers/python:3.9--1' }"
 
     input:
-    val id
-    val fields
+    path big_metadata
+    path valid_metadata_json
 
     output:
-    path "*.tsv"          , emit: tsv
-    path "*.runinfo.json" , emit: json
-    path "versions.yml"   , emit: versions
+    path "valid.metadata.json"  , emit: json
+    path "versions.yml"         , emit: versions
 
     script:
-    def metadata_fields = fields ? "--ena_metadata_fields ${fields}" : ''
     """
-    echo $id > id.txt
-    sra_ids_to_runinfo.py \\
-        id.txt \\
-        ${id}.runinfo.tsv \\
-        ${id}.runinfo.json \\
-        $metadata_fields
+    merge_metadata.py \\
+        ${big_metadata} \\
+        ${valid_metadata_json}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
