@@ -1,0 +1,28 @@
+nextflow_process {
+
+    name "Test Process SAMPLEJSON_TO_METADATA"
+    script "../main.nf"
+    process "SAMPLEJSON_TO_METADATA"
+
+    test("Should run without failures") {
+
+        when {
+            process {
+                """
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
+                input[1] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "ERC000011-TRGX01.json", checkIfExists: true)
+                input[2] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "mappings.json", checkIfExists: true)
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+}

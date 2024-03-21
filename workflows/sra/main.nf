@@ -164,6 +164,21 @@ workflow SRA {
             params.mappings_json
     )
 
+    // If user supplied create json from tsv or xlsx input file
+    // XLSX_TO_METADATA ()
+
+    // Reads in json, checks for things like Types and mandatory, and regex defined in schema
+    // outputs a set of tsvs per metadata schema for users to double check
+    CHECK_METADATA (
+        SAMPLEJSON_TO_METADATA.out.json, // This will not be available to user supplied.
+        params.metadata_schema,
+        params.output_tsv ?: '' // only output tsv if needed (e.g. user supplied will start with tsv)
+    )
+
+    // Manually check metadata please
+
+    //
+
     SRA_TO_SAMPLESHEET
         .out
         .mappings

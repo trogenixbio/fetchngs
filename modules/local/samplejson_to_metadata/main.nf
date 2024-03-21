@@ -14,6 +14,7 @@ process SAMPLEJSON_TO_METADATA {
 
     output:
     path "metadata.json"        , emit: metadata_json
+    path "*.tsv"                , emit: metadata_tsv
     path "versions.yml"         , emit: versions
 
     script:

@@ -12,14 +12,14 @@ process CHECK_METADATA {
     path metadata_schema
 
     output:
-    path "valid.metadata.json"  , emit: json
-    path "versions.yml"         , emit: versions
+    path "validation_report.txt" , emit: json
+    path "versions.yml"          , emit: versions
 
     script:
     """
-    check_schema.py \\
+    check_metadata.py \\
         ${metadata_json} \\
-        ${metadata_schema}
+        ${metadata_schema} > validation_report.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
