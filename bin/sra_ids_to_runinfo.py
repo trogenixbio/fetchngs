@@ -335,7 +335,7 @@ class ENAMetadataFetcher:
             accession (str): An ENA experiment accession.
 
         Returns:
-            csv.DictReader: A CSV reader instance of the metadata.
+            data (dict): JSON returned by ENA API
 
         """
         params = {**self._params, "accession": accession, "format": "json"}
@@ -488,7 +488,8 @@ def fetch_sra_runinfo(file_in, file_out, json_out, ena_metadata_fields):
     seen_ids = set()
     run_ids = set()
     ena_fetcher = ENAMetadataFetcher(ena_metadata_fields)
-    with open(file_in, "r") as fin, open(file_out, "w") as fout, open(json_out, "w") as jout:
+    all_json_data = []
+    with open(file_in, "r") as fin, open(file_out, "w") as fout:
         writer = csv.DictWriter(fout, fieldnames=ena_metadata_fields, delimiter="\t")
         writer.writeheader()
         for line in fin:
@@ -504,14 +505,20 @@ def fetch_sra_runinfo(file_in, file_out, json_out, ena_metadata_fields):
             if not ids:
                 logger.error(f"No matches found for database id {db_id}!\nLine: '{line.strip()}'")
                 sys.exit(1)
-            for accession in ids:
+            for accession in set(ids):
                 for row in ena_fetcher.open_experiment_table(accession):
                     run_accession = row["run_accession"]
                     if run_accession not in run_ids:
                         writer.writerow(row)
                         run_ids.add(run_accession)
-                        json.dump(ena_fetcher.fetch_experiment_json(accession), jout, indent=4)
 
+                fetched_data = ena_fetcher.fetch_experiment_json(accession)
+                if fetched_data:  # Check if fetched_data is not None or empty
+                    all_json_data.extend(fetched_data)  # Use extend() to add elements of fetched_data to all_json_data
+
+    # Write the accumulated JSON data to the file after finishing the loop
+    with open(json_out, "w") as jout:
+        json.dump(all_json_data, jout, indent=4)
 
 def main(args=None):
     args = parse_args(args)

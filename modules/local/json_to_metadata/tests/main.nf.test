@@ -1,8 +1,8 @@
 nextflow_process {
 
-    name "Test Process SAMPLEJSON_TO_METADATA"
+    name "Test Process JSON_TO_METADATA"
     script "../main.nf"
-    process "SAMPLEJSON_TO_METADATA"
+    process "JSON_TO_METADATA"
 
     test("Should run without failures") {
 

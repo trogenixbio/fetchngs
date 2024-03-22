@@ -10,14 +10,17 @@ process SRA_RUNINFO_TO_FTP {
     path runinfo
 
     output:
-    path "*.tsv"       , emit: tsv
+    //path "*.tsv"       , emit: tsv
+    path "*.json"       , emit: json
     path "versions.yml", emit: versions
-
+    // sra_runinfo_to_ftp.py \\
+    //     ${runinfo.join(',')} \\
+    //     ${runinfo.toString().tokenize(".")[0]}.runinfo_ftp.tsv
     script:
     """
-    sra_runinfo_to_ftp.py \\
+    sra_runinfo_to_ftp_json.py \\
         ${runinfo.join(',')} \\
-        ${runinfo.toString().tokenize(".")[0]}.runinfo_ftp.tsv
+        ${runinfo.toString().tokenize(".")[0]}.runinfo_ftp.json
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -1,4 +1,4 @@
-process SAMPLEJSON_TO_METADATA {
+process JSON_TO_METADATA {
     tag "$sample_json"
     label 'error_retry'
 
@@ -19,7 +19,7 @@ process SAMPLEJSON_TO_METADATA {
 
     script:
     """
-    samplejson_to_metadata.py \\
+    json_to_metadata.py \\
         ${sample_json} \\
         ${metadata_schema} \\
         metadata.json \\

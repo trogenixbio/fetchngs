@@ -12,8 +12,8 @@ include { ASPERA_CLI              } from '../../modules/local/aspera_cli'
 include { SRA_TO_SAMPLESHEET      } from '../../modules/local/sra_to_samplesheet'
 include { softwareVersionsToYAML  } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { SAMPLE_TO_JSON          } from '../../modules/local/sample_to_json'
-include { SAMPLEJSON_TO_METADATA      } from '../../modules/local/samplejson_to_metadata'
-
+include { JSON_TO_METADATA      } from '../../modules/local/json_to_metadata'
+include { CHECK_METADATA      } from '../../modules/local/check_metadata'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE SUBWORKFLOWS
@@ -48,15 +48,31 @@ workflow SRA {
     //
     // MODULE: Parse SRA run information, create file containing FTP links and read into workflow as [ meta, [reads] ]
     //
+    // SRA_RUNINFO_TO_FTP (
+    //     SRA_IDS_TO_RUNINFO.out.tsv
+    // )
     SRA_RUNINFO_TO_FTP (
-        SRA_IDS_TO_RUNINFO.out.tsv
+        SRA_IDS_TO_RUNINFO.out.json
     )
     ch_versions = ch_versions.mix(SRA_RUNINFO_TO_FTP.out.versions.first())
 
+    // SRA_RUNINFO_TO_FTP
+    //     .out
+    //     .tsv
+    //     .splitCsv(header:true, sep:'\t')
+    //     .map {
+    //         meta ->
+    //             def meta_clone = meta.clone()
+    //             meta_clone.single_end = meta_clone.single_end.toBoolean()
+    //             return meta_clone
+    //     }
+    //     .unique()
+    //     .set { ch_sra_metadata }
+
     SRA_RUNINFO_TO_FTP
         .out
-        .tsv
-        .splitCsv(header:true, sep:'\t')
+        .json
+        .splitJson()
         .map {
             meta ->
                 def meta_clone = meta.clone()
@@ -65,6 +81,8 @@ workflow SRA {
         }
         .unique()
         .set { ch_sra_metadata }
+
+    ch_sra_metadata.view()
 
     if (!params.skip_fastq_download) {
 
@@ -136,6 +154,10 @@ workflow SRA {
             .set { ch_sra_metadata }
     }
 
+    ch_sra_metadata.view()
+
+    // MAKE META INTO BIG JSON HERE
+
     //
     // MODULE: Stage FastQ files downloaded by SRA together and auto-create a samplesheet
     //
@@ -156,24 +178,24 @@ workflow SRA {
         .collectFile(name:'samplesheet.csv', storeDir: "${params.outdir}/samplesheet")
         .set { ch_samplesheet }
 
-    SAMPLE_TO_JSON(ch_samplesheet)
+    // SAMPLE_TO_JSON(ch_samplesheet)
 
-    SAMPLEJSON_TO_METADATA (
-            SAMPLE_TO_JSON.out.json,
-            params.metadata_schema,
-            params.mappings_json
-    )
+    // JSON_TO_METADATA (
+    //     SAMPLE_TO_JSON.out.json,
+    //     params.metadata_schema,
+    //     params.mappings_json
+    // )
 
     // If user supplied create json from tsv or xlsx input file
     // XLSX_TO_METADATA ()
 
     // Reads in json, checks for things like Types and mandatory, and regex defined in schema
     // outputs a set of tsvs per metadata schema for users to double check
-    CHECK_METADATA (
-        SAMPLEJSON_TO_METADATA.out.json, // This will not be available to user supplied.
-        params.metadata_schema,
-        params.output_tsv ?: '' // only output tsv if needed (e.g. user supplied will start with tsv)
-    )
+    // CHECK_METADATA (
+    //     JSON_TO_METADATA.out.metadata_json, // This will not be available to user supplied.
+    //     params.metadata_schema,
+    //     params.output_tsv ?: '' // only output tsv if needed (e.g. user supplied will start with tsv)
+    // )
 
     // Manually check metadata please
 

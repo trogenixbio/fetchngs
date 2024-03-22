@@ -86,28 +86,28 @@ def convert_to_schema_format(input_data, schema, field_mapping, group_mapping):
     return output
 
 def json_to_tsv(json_data, tsv_filepath):
-    # Check if there's data to write
     if not json_data:
         print("No data to write to TSV.")
         return
 
+    written_items = []  # List to track items already processed
     with open(tsv_filepath, 'w', newline='') as tsvfile:
-        # Initialize CSV writer, headers to be determined based on first item
         writer = None
-
         for item in json_data:
-            # Flatten "metadata" contents into separate columns
             flat_item = {k: v for k, v in item.items() if k != 'metadata'}
             if 'metadata' in item:
                 for meta_key, meta_value in item['metadata'].items():
                     flat_item[f"metadata_{meta_key}"] = meta_value
 
-            if writer is None:  # If headers aren't set yet, initialize them
-                headers = flat_item.keys()
-                writer = csv.DictWriter(tsvfile, fieldnames=headers, delimiter='\t')
-                writer.writeheader()
-
-            writer.writerow(flat_item)
+            # Convert the dictionary to a tuple of items for comparison
+            item_tuple = tuple(flat_item.items())
+            if item_tuple not in written_items:
+                written_items.append(item_tuple)  # Track this item as written
+                if writer is None:
+                    headers = flat_item.keys()
+                    writer = csv.DictWriter(tsvfile, fieldnames=headers, delimiter='\t')
+                    writer.writeheader()
+                writer.writerow(flat_item)
 
     print(f"Data successfully written to {tsv_filepath}")
 

@@ -1,0 +1,8 @@
+name: load_user_metadata
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - conda-forge::pandas=1.5.2
+  - conda-forge::openpyxl=3.1.2

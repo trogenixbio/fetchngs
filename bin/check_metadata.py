@@ -35,12 +35,15 @@ def validate_output_against_schema(output_data, schema):
                         validation_errors.append(error_msg)
 
                     if field_info['field_type'] == 'TEXT_CHOICE_FIELD' and value not in field_info['cv']:
-                        error_msg = f"FAILURE field '{field_name}' in entity '{entity}' has value '{value}' not in controlled vocabulary {field_info['cv']}."
-                        validation_errors.append(error_msg)
+                        if not (field_info['cardinality'] == 'optional' and (value is None or value == "")):
+                            error_msg = f"FAILURE field '{field_name}' in entity '{entity}' has value '{value}' not in controlled vocabulary {field_info['cv']}."
+                            validation_errors.append(error_msg)
 
-                    if field_info.get('regex') and not re.match(field_info['regex'], value):
-                        error_msg = f"FAILURE field '{field_name}' in entity '{entity}' with value '{value}' does not match regex pattern {field_info['regex']}."
-                        validation_errors.append(error_msg)
+                    if field_info.get('regex'):
+                        if not (field_info['cardinality'] == 'optional' and (value is None or value == "")):
+                            if not re.match(field_info['regex'], value):
+                                error_msg = f"Field '{field_name}' in entity '{entity}' with value '{value}' does not match regex pattern {field_info['regex']}."
+                                validation_errors.append(error_msg)
 
                 # Success report for each field
                 validation_report.append(f"SUCCESS field '{field_name}' in entity '{entity}' passes validation.")
@@ -58,10 +61,11 @@ if __name__ == "__main__":
     output_data = load_json(args.output_json)
 
     report, errors = validate_output_against_schema(output_data, schema)
-    print(report)
 
     if errors:
         print("\nValidation Errors Found:")
         for error in errors:
             print(error)
-        sys.exit(f"Validation failed with {len(errors)} errors: \n{validation_errors}")
+        sys.exit(f"Validation failed with {len(errors)} errors. Please see validation_report.txt for details.")
+    else:
+        print(report)

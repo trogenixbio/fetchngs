@@ -1,0 +1,53 @@
+{
+    "Load in xlsx": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,66957dbc73243ee1a5506597a26f8eb5"
+                ],
+                "metadata": [
+                    "metadata.json:md5,66957dbc73243ee1a5506597a26f8eb5"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-03-22T14:11:06.917073694"
+    },
+    "Load in xlsx meta": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,d8bfe7111fc8fb5dcfa4ac3fe68e6a53"
+                ],
+                "metadata": [
+                    "metadata.json:md5,d8bfe7111fc8fb5dcfa4ac3fe68e6a53"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-03-22T14:12:36.337115882"
+    },
+    "Load in TSV set": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,0744878eaf61572aa7d4355a69cd77ea"
+                ],
+                "metadata": [
+                    "metadata.json:md5,0744878eaf61572aa7d4355a69cd77ea"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-03-22T14:11:16.820558696"
+    }
+}
