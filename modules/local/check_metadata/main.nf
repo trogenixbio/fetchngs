@@ -1,5 +1,5 @@
 process CHECK_METADATA {
-    tag "$id"
+    tag "$metadata_json"
     label 'error_retry'
 
     conda "conda-forge::python=3.9.5"

@@ -48,26 +48,11 @@ workflow SRA {
     //
     // MODULE: Parse SRA run information, create file containing FTP links and read into workflow as [ meta, [reads] ]
     //
-    // SRA_RUNINFO_TO_FTP (
-    //     SRA_IDS_TO_RUNINFO.out.tsv
-    // )
+
     SRA_RUNINFO_TO_FTP (
         SRA_IDS_TO_RUNINFO.out.json
     )
     ch_versions = ch_versions.mix(SRA_RUNINFO_TO_FTP.out.versions.first())
-
-    // SRA_RUNINFO_TO_FTP
-    //     .out
-    //     .tsv
-    //     .splitCsv(header:true, sep:'\t')
-    //     .map {
-    //         meta ->
-    //             def meta_clone = meta.clone()
-    //             meta_clone.single_end = meta_clone.single_end.toBoolean()
-    //             return meta_clone
-    //     }
-    //     .unique()
-    //     .set { ch_sra_metadata }
 
     SRA_RUNINFO_TO_FTP
         .out
@@ -81,8 +66,6 @@ workflow SRA {
         }
         .unique()
         .set { ch_sra_metadata }
-
-    ch_sra_metadata.view()
 
     if (!params.skip_fastq_download) {
 
@@ -154,17 +137,104 @@ workflow SRA {
             .set { ch_sra_metadata }
     }
 
-    ch_sra_metadata.view()
+    // Add details to meta ready for json and samplesheet creation
+
+    ch_sra_metadata
+        .map {
+            meta ->
+                def meta_clone = meta.clone()
+
+                meta_clone.remove("id")
+                meta_clone.remove("fastq_1")
+                meta_clone.remove("fastq_2")
+                meta_clone.remove("md5_1")
+                meta_clone.remove("md5_2")
+                meta_clone.remove("single_end")
+
+                // Add relevant fields to the beginning of the map
+                pipeline_map = [
+                    sample  : "${meta.id.split('_')[0..-2].join('_')}",
+                    fastq_1 : meta.fastq_1,
+                    fastq_2 : meta.fastq_2
+                ]
+
+                // Add nf-core pipeline specific entries
+                def pipeline = params.nf_core_pipeline ?: ''
+                def rna_strandedness = params.nf_core_rnaseq_strandedness ?: 'auto'
+                if (pipeline) {
+                    if (pipeline == 'rnaseq') {
+                        pipeline_map << [ strandedness: rna_strandedness ]
+                    } else if (pipeline == 'atacseq') {
+                        pipeline_map << [ replicate: 1 ]
+                    } else if (pipeline == 'taxprofiler') {
+                        pipeline_map << [ fasta: '' ]
+                    }
+                }
+                pipeline_map << meta_clone
+
+                return [ meta, pipeline_map ]
+        }
+        .set { ch_sra_metadata_pipeline_map }
 
     // MAKE META INTO BIG JSON HERE
+
+    ch_sra_metadata_pipeline_map
+        .map { it[1] }
+        .collectFile( name:'testmeta.json') {
+            "\t{\n" +
+            '\t\t' + '"sample": ' + '"' + it.sample.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_1": ' + '"' + it.fastq_1.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_2": ' + '"' + it.fastq_2.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"run_accession": ' + '"' + it.run_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"experiment_accession": ' + '"' + it.experiment_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"sample_accession": ' + '"' + it.sample_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"secondary_sample_accession": ' + '"' + it.secondary_sample_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"study_accession": ' + '"' + it.study_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"secondary_study_accession": ' + '"' + it.secondary_study_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"submission_accession": ' + '"' + it.submission_accession.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"run_alias": ' + '"' + it.run_alias.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"experiment_alias": ' + '"' + it.experiment_alias.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"sample_alias": ' + '"' + it.sample_alias.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"study_alias": ' + '"' + it.study_alias.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"library_layout": ' + '"' + it.library_layout.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"library_selection": ' + '"' + it.library_selection.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"library_strategy": ' + '"' + it.library_strategy.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"library_name": ' + '"' + it.library_name.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"instrument_model": ' + '"' + it.instrument_model.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"instrument_platform": ' + '"' + it.instrument_platform.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"base_count": ' + '"' + it.base_count.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"read_count": ' + '"' + it.read_count.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"tax_id": ' + '"' + it.tax_id.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"scientific_name": ' + '"' + it.scientific_name.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"sample_title": ' + '"' + it.sample_title.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"experiment_title": ' + '"' + it.experiment_title.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"study_title": ' + '"' + it.study_title.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"sample_description": ' + '"' + it.sample_description.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_md5": ' + '"' + it.fastq_md5.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_bytes": ' + '"' + it.fastq_bytes.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_ftp": ' + '"' + it.fastq_ftp.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_galaxy": ' + '"' + it.fastq_galaxy.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"fastq_aspera": ' + '"' + it.fastq_aspera.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"cell_type": ' + '"' + it.cell_type.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"tissue_type": ' + '"' + it.tissue_type.toString() + '"' + ',' + '\n' +
+            '\t\t' + '"cell_line": ' + '"' + it.cell_line.toString() + '"' + '\n' +
+            "\t},\n"
+        }
+        .map {
+            "[\n" +  it.text + "]"
+        }
+        .map {
+            it.replace("},\n]", "}\n]")
+        }
+        .collectFile( name:'samplesheet.json', storeDir: "${params.outdir}/samplesheet")
+        .set { ch_samplesheet_json }
 
     //
     // MODULE: Stage FastQ files downloaded by SRA together and auto-create a samplesheet
     //
+
     SRA_TO_SAMPLESHEET (
-        ch_sra_metadata,
-        params.nf_core_pipeline ?: '',
-        params.nf_core_rnaseq_strandedness ?: 'auto',
+        ch_sra_metadata_pipeline_map,
         params.sample_mapping_fields
     )
 
@@ -185,6 +255,11 @@ workflow SRA {
     //     params.metadata_schema,
     //     params.mappings_json
     // )
+    JSON_TO_METADATA (
+        ch_samplesheet_json,
+        params.metadata_schema,
+        params.mappings_json
+    )
 
     // If user supplied create json from tsv or xlsx input file
     // XLSX_TO_METADATA ()
@@ -193,12 +268,12 @@ workflow SRA {
     // outputs a set of tsvs per metadata schema for users to double check
     // CHECK_METADATA (
     //     JSON_TO_METADATA.out.metadata_json, // This will not be available to user supplied.
-    //     params.metadata_schema,
-    //     params.output_tsv ?: '' // only output tsv if needed (e.g. user supplied will start with tsv)
+    //     params.metadata_schema
+    //     //params.output_tsv ?: '' // only output tsv if needed (e.g. user supplied will start with tsv)
     // )
 
+    //
     // Manually check metadata please
-
     //
 
     SRA_TO_SAMPLESHEET
