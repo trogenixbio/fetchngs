@@ -12,12 +12,13 @@ process LOAD_USER_METADATA {
     val is_excel
 
     output:
-    path "metadata.json", emit: metadata
+    path "metadata.json",   emit: metadata_json
+    path "samplsheet.json", emit: samplesheet_json
 
     script:
     def is_excel = is_excel ? "--is_excel": ""
     """
-    load_user_metadata.py $is_excel $input_metadata metadata.json
+    load_user_metadata.py $is_excel $input_metadata metadata.json samplsheet.json
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

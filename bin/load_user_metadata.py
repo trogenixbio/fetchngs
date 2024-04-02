@@ -54,20 +54,55 @@ def read_tsv_to_dict(filenames):
 
     return data
 
-def main(filepaths, output_json_path, is_excel=False):
+def extract_fastq_info(data, output_json_path):
+
+    # Create a dictionary for fast access to experiments by their accession number
+    experiments = {exp["accession"]: exp for exp in data["experiment"]}
+
+    # Create a dictionary for fast access to samples by their accession number
+    samples = {sample["accession"]: sample for sample in data["sample"]}
+
+    output_data = []
+    for run in data["run"]:
+        # Get experiment based on experiment_accession
+        experiment = experiments.get(run["experiment_accession"])
+        # If the experiment is found, get the sample accession
+        if experiment:
+            sample_accession = experiment.get("sample_accession")
+            # Use the sample accession to find the corresponding sample
+            sample = samples.get(sample_accession)
+
+        sample_dict = {
+            "sample": run["experiment_accession"],
+            "study_accession": experiment["study_accession"],
+            "fastq_1": run.get('file_1', ''),
+            "fastq_2": run.get('file_2', ''),
+            "md5_1": run["metadata"].get('fastq_md5', '').split(";")[0],
+            "md5_2": run["metadata"].get('fastq_md5', '').split(";")[1],
+        }
+        output_data.append(sample_dict)
+
+    # Save the transformed data to a new JSON file
+    with open(output_json_path, 'w') as outfile:
+        json.dump(output_data, outfile, indent=4)
+
+def main(filepaths, output_metadata_json_path, output_samplesheet_json_path, is_excel=False):
     if is_excel:
         data = read_excel_to_dict(filepaths[0])  # Expects a list with one Excel file path
     else:
         data = read_tsv_to_dict(filepaths)  # Expects a list of TSV file paths
 
-    with open(output_json_path, 'w') as jsonfile:
+    with open(output_metadata_json_path, 'w') as jsonfile:
         json.dump(data, jsonfile, indent=4)
+
+    extract_fastq_info(data, output_samplesheet_json_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert TSVs or an Excel file to JSON.")
     parser.add_argument("filepaths", nargs='+', help="Path(s) to the input TSV or single Excel file")
-    parser.add_argument("output_json_path", help="Path to the output JSON file")
+    parser.add_argument("output_metadata_json_path", help="Path to the output metadata JSON file")
+    parser.add_argument("output_samplesheet_json_path", help="Path to the output samplesheet JSON file")
     parser.add_argument("--is_excel", action='store_true', help="Flag if the input is an Excel file")
     args = parser.parse_args()
 
-    main(args.filepaths, args.output_json_path, args.is_excel)
+    main(args.filepaths, args.output_metadata_json_path, args.output_samplesheet_json_path, args.is_excel)

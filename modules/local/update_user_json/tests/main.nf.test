@@ -1,0 +1,24 @@
+nextflow_process {
+
+    name "Test process: UPDATE_USER_JSON"
+    script "../main.nf"
+    process "UPDATE_USER_JSON"
+
+    test("Should run without failures") {
+
+        when {
+            process {
+                """
+                input[0] = "metadata.json"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+}
