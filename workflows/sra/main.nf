@@ -237,7 +237,7 @@ workflow SRA {
             .map {
                 it.replace("},\n]", "}\n]")
             }
-            .collectFile( name:'samplesheet.json', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${workflow.runName}-${nextflow.build}/metadata/samplesheet")
+            .collectFile( name:'samplesheet.json', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet")
             .set { ch_samplesheet_json }
 
         //
@@ -256,7 +256,7 @@ workflow SRA {
             .map { it[1] }
             .collectFile(name:'tmp_samplesheet.csv', newLine: true, keepHeader: true, sort: { it.baseName })
             .map { it.text.tokenize('\n').join('\n') }
-            .collectFile(name:'samplesheet.csv', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${workflow.runName}-${nextflow.build}/metadata/samplesheet")
+            .collectFile(name:'samplesheet.csv', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet")
             .set { ch_samplesheet }
 
         //
@@ -287,7 +287,7 @@ workflow SRA {
             .map { it[1] }
             .collectFile(name:'tmp_id_mappings.csv', newLine: true, keepHeader: true, sort: { it.baseName })
             .map { it.text.tokenize('\n').join('\n') }
-            .collectFile(name:'id_mappings.csv', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${workflow.runName}-${nextflow.build}/metadata/samplesheet")
+            .collectFile(name:'id_mappings.csv', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet")
             .set { ch_mappings }
 
         //
@@ -405,7 +405,7 @@ workflow SRA {
     // Collate and save software versions
     //
     softwareVersionsToYAML(ch_versions)
-        .collectFile(storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${workflow.runName}-${nextflow.build}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
+        .collectFile(storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
 
     emit:
     samplesheet     = ch_samplesheet
