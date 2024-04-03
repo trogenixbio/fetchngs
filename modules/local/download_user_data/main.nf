@@ -8,7 +8,7 @@ process DOWNLOAD_USER_DATA {
         'biocontainers/python:3.9--1' }"
 
     input:
-    tuple val(meta), path(fastq)
+    tuple val(meta), path(fastq, stageAs: 'fastq/*')
 
     output:
     tuple val(meta), path("*fastq.gz"), emit: fastq
@@ -17,10 +17,20 @@ process DOWNLOAD_USER_DATA {
 
     script:
     def args = task.ext.args ?: ''
+
+    def echo_md5_single = meta.md5_1 ? "echo '${meta.md5_1}  ${meta.id}.fastq.gz'": "echo 'No md5sum available for ${meta.id}.fastq.gz'"
+
+    def echo_md5_1 = meta.md5_1 ? "echo '${meta.md5_1}  ${meta.id}_1.fastq.gz'": "echo 'No md5sum available for ${meta.id}_1.fastq.gz'"
+    def echo_md5_2 = meta.md5_2 ? "echo '${meta.md5_2}  ${meta.id}_2.fastq.gz'": "echo 'No md5sum available for ${meta.id}_2.fastq.gz'"
+
+    def md5_1 = meta.md5_1 ? "md5sum -c": "touch "
+    def md5_2 = meta.md5_2 ? "md5sum -c": "touch "
+
     if (meta.single_end) {
         """
-        echo "${meta.md5_1}  ${meta.id}.fastq.gz" > ${meta.id}.fastq.gz.md5
-        md5sum -c ${meta.id}.fastq.gz.md5
+        $echo_md5_single > ${meta.id}.fastq.gz.md5
+        $md5_1 ${meta.id}.fastq.gz.md5
+        cp $fastq ${meta.id}.fastq.gz
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
@@ -29,11 +39,13 @@ process DOWNLOAD_USER_DATA {
         """
     } else {
         """
-        echo "${meta.md5_1}  ${meta.id}_1.fastq.gz" > ${meta.id}_1.fastq.gz.md5
-        md5sum -c ${meta.id}_1.fastq.gz.md5
+        $echo_md5_1 > ${meta.id}_1.fastq.gz.md5
+        $md5_1 ${meta.id}_1.fastq.gz.md5
+        cp ${fastq[0]} ${meta.id}_1.fastq.gz
 
-        echo "${meta.md5_2}  ${meta.id}_2.fastq.gz" > ${meta.id}_2.fastq.gz.md5
-        md5sum -c ${meta.id}_2.fastq.gz.md5
+        $echo_md5_2 > ${meta.id}_2.fastq.gz.md5
+        $md5_2 ${meta.id}_2.fastq.gz.md5
+        cp ${fastq[1]} ${meta.id}_2.fastq.gz
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

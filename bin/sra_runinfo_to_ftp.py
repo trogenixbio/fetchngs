@@ -62,7 +62,10 @@ def parse_sra_runinfo(file_in):
         reader = csv.DictReader(fin, delimiter="\t", skipinitialspace=True)
         header = list(reader.fieldnames)
         if missing := frozenset(columns).difference(frozenset(header)):
-            logger.critical(f"The following expected columns are missing from {file_in}: " f"{', '.join(missing)}.")
+            logger.critical(
+                f"The following expected columns are missing from {file_in}: "
+                f"{', '.join(missing)}."
+            )
             sys.exit(1)
         for row in reader:
             db_id = row["experiment_accession"]
@@ -70,9 +73,14 @@ def parse_sra_runinfo(file_in):
                 fq_files = row["fastq_ftp"].split(";")[-2:]
                 fq_md5 = row["fastq_md5"].split(";")[-2:]
                 if len(fq_files) == 1:
-                    assert fq_files[0].endswith(".fastq.gz"), f"Unexpected FastQ file format {file_in.name}."
+                    assert fq_files[0].endswith(
+                        ".fastq.gz"
+                    ), f"Unexpected FastQ file format {file_in.name}."
                     if row["library_layout"] != "SINGLE":
-                        logger.warning(f"The library layout '{row['library_layout']}' should be " f"'SINGLE'.")
+                        logger.warning(
+                            f"The library layout '{row['library_layout']}' should be "
+                            f"'SINGLE'."
+                        )
                     sample = {
                         "fastq_1": fq_files[0],
                         "fastq_2": None,
@@ -81,10 +89,17 @@ def parse_sra_runinfo(file_in):
                         "single_end": "true",
                     }
                 elif len(fq_files) == 2:
-                    assert fq_files[0].endswith("_1.fastq.gz"), f"Unexpected FastQ file format {file_in.name}."
-                    assert fq_files[1].endswith("_2.fastq.gz"), f"Unexpected FastQ file format {file_in.name}."
+                    assert fq_files[0].endswith(
+                        "_1.fastq.gz"
+                    ), f"Unexpected FastQ file format {file_in.name}."
+                    assert fq_files[1].endswith(
+                        "_2.fastq.gz"
+                    ), f"Unexpected FastQ file format {file_in.name}."
                     if row["library_layout"] != "PAIRED":
-                        logger.warning(f"The library layout '{row['library_layout']}' should be " f"'PAIRED'.")
+                        logger.warning(
+                            f"The library layout '{row['library_layout']}' should be "
+                            f"'PAIRED'."
+                        )
                     sample = {
                         "fastq_1": fq_files[0],
                         "fastq_2": fq_files[1],
@@ -109,7 +124,8 @@ def parse_sra_runinfo(file_in):
             else:
                 if sample in runinfo[db_id]:
                     logger.error(
-                        f"Input run info file contains duplicate rows!\n" f"{', '.join([row[col] for col in header])}"
+                        f"Input run info file contains duplicate rows!\n"
+                        f"{', '.join([row[col] for col in header])}"
                     )
                 else:
                     runinfo[db_id].append(sample)
@@ -131,7 +147,9 @@ def sra_runinfo_to_ftp(files_in, file_out):
                 logger.warning(f"Duplicate sample identifier found!\nID: '{db_id}'")
 
     # Create a combined header from all input files.
-    combined_header = header[0] + list(set().union(chain.from_iterable(header)).difference(header[0]))
+    combined_header = header[0] + list(
+        set().union(chain.from_iterable(header)).difference(header[0])
+    )
     combined_header.insert(0, "id")
 
     # Write samplesheet with paths to FastQ files and md5 sums.

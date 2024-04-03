@@ -8,17 +8,18 @@ process UPDATE_USER_JSON {
 
     input:
     path metadata_json
+    path samplesheet_json
     val cloud_prefix
 
     output:
-    path "metadata_update.json" , emit: metadata_json_update
-    path "versions.yml"         , emit: versions
+    path "metadata_update.json"    , emit: metadata_json_update
+    path "samplesheet_update.json" , emit: samplesheet_json_update
+    path "versions.yml"            , emit: versions
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = "${params.outdir}"
     """
-    update_user_json.py $metadata_json $prefix metadata_update.json
+    update_user_json.py $metadata_json $samplesheet_json metadata_update.json samplesheet_update.json $cloud_prefix
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

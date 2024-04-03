@@ -1,6 +1,6 @@
 
 process LOAD_USER_METADATA {
-    tag "$metadata"
+    tag "$input_metadata"
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -12,13 +12,14 @@ process LOAD_USER_METADATA {
     val is_excel
 
     output:
-    path "metadata.json",   emit: metadata_json
-    path "samplsheet.json", emit: samplesheet_json
+    path "metadata.json"     , emit: metadata_json
+    path "samplesheet.json"  , emit: samplesheet_json
+    path "versions.yml"      , emit: versions
 
     script:
-    def is_excel = is_excel ? "--is_excel": ""
+    def excel = is_excel ? "--is_excel": ""
     """
-    load_user_metadata.py $is_excel $input_metadata metadata.json samplsheet.json
+    load_user_metadata.py ${excel} ${input_metadata} metadata.json samplesheet.json
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

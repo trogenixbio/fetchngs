@@ -13,6 +13,7 @@ process CHECK_METADATA {
 
     output:
     path "validation_report.txt" , emit: json
+    path "metadata-valid.json"   , emit: metadata_json_valid
     path "versions.yml"          , emit: versions
 
     script:

@@ -181,11 +181,12 @@ def sraCheckENAMetadataFields(ena_metadata_fields) {
 //
 def sraCurateSamplesheetWarn() {
     log.warn "=============================================================================\n" +
-        "  Please double-check the samplesheet that has been auto-created by the pipeline.\n\n" +
+        "  Please double-check the samplesheet and metadata that has been auto-created\n" +
+        "  by the pipeline before any system wide metadata update is run.\n\n" +
         "  Public databases don't reliably hold information such as strandedness\n" +
         "  information, controls etc\n\n" +
         "  All of the sample metadata obtained from the ENA has been appended\n" +
-        "  as additional columns to help you manually curate the samplesheet before\n" +
+        "  as additional columns to help you manually curate the samplesheet/metadata before\n" +
         "  running nf-core/other pipelines.\n" +
         "==================================================================================="
 }

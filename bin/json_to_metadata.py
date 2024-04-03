@@ -4,10 +4,12 @@ import json
 import argparse
 import csv
 
+
 def load_mappings(mapping_json_path):
-    with open(mapping_json_path, 'r') as file:
+    with open(mapping_json_path, "r") as file:
         mappings = json.load(file)
-    return mappings['field_mapping'], mappings['group_mapping']
+    return mappings["field_mapping"], mappings["group_mapping"]
+
 
 def apply_field_mapping(item, schema, field_mapping, group_mapping):
     mapped_item = {entity: {} for entity in schema.keys()}
@@ -27,7 +29,9 @@ def apply_field_mapping(item, schema, field_mapping, group_mapping):
     # Then, apply explicit field mappings
     for input_field, value in item.items():
         if input_field in field_mapping:
-            if not any(isinstance(el, list) for el in field_mapping[input_field]): # If a singlet
+            if not any(
+                isinstance(el, list) for el in field_mapping[input_field]
+            ):  # If a singlet
                 entity, schema_field = field_mapping[input_field]
                 if schema_field not in fieldnames_schema[entity]["fields"]:
                     if "metadata" not in mapped_item[entity]:
@@ -35,7 +39,7 @@ def apply_field_mapping(item, schema, field_mapping, group_mapping):
                     mapped_item[entity]["metadata"][schema_field] = value
                 else:
                     mapped_item[entity][schema_field] = value
-            else: # If a multimapper
+            else:  # If a multimapper
                 for mapping in field_mapping[input_field]:
                     entity, schema_field = mapping
                     # Create metadata sub-dictionary if a direct match is not found
@@ -85,18 +89,19 @@ def convert_to_schema_format(input_data, schema, field_mapping, group_mapping):
 
     return output
 
+
 def json_to_tsv(json_data, tsv_filepath):
     if not json_data:
         print("No data to write to TSV.")
         return
 
     written_items = []  # List to track items already processed
-    with open(tsv_filepath, 'w', newline='') as tsvfile:
+    with open(tsv_filepath, "w", newline="") as tsvfile:
         writer = None
         for item in json_data:
-            flat_item = {k: v for k, v in item.items() if k != 'metadata'}
-            if 'metadata' in item:
-                for meta_key, meta_value in item['metadata'].items():
+            flat_item = {k: v for k, v in item.items() if k != "metadata"}
+            if "metadata" in item:
+                for meta_key, meta_value in item["metadata"].items():
                     flat_item[f"metadata_{meta_key}"] = meta_value
 
             # Convert the dictionary to a tuple of items for comparison
@@ -105,21 +110,24 @@ def json_to_tsv(json_data, tsv_filepath):
                 written_items.append(item_tuple)  # Track this item as written
                 if writer is None:
                     headers = flat_item.keys()
-                    writer = csv.DictWriter(tsvfile, fieldnames=headers, delimiter='\t')
+                    writer = csv.DictWriter(tsvfile, fieldnames=headers, delimiter="\t")
                     writer.writeheader()
                 writer.writerow(flat_item)
 
     print(f"Data successfully written to {tsv_filepath}")
 
+
 def main(input_json_path, schema_json_path, output_json_path, mapping_json_path):
 
-    input_data = json.load(open(input_json_path, 'r'))
-    schema = json.load(open(schema_json_path, 'r'))
+    input_data = json.load(open(input_json_path, "r"))
+    schema = json.load(open(schema_json_path, "r"))
 
     field_mapping, group_mapping = load_mappings(mapping_json_path)
 
-    output_data = convert_to_schema_format(input_data, schema, field_mapping, group_mapping)
-    with open(output_json_path, 'w') as file:
+    output_data = convert_to_schema_format(
+        input_data, schema, field_mapping, group_mapping
+    )
+    with open(output_json_path, "w") as file:
         json.dump(output_data, file, indent=4, ensure_ascii=False)
 
     for entity, records in output_data.items():
@@ -135,8 +143,11 @@ def main(input_json_path, schema_json_path, output_json_path, mapping_json_path)
         # json_to_tsv(flat_records, tsv_filepath)
         json_to_tsv(records, tsv_filepath)
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Convert JSON to conform with a given schema using external field and group mapping.")
+    parser = argparse.ArgumentParser(
+        description="Convert JSON to conform with a given schema using external field and group mapping."
+    )
     parser.add_argument("input_json", help="Path to the input JSON file")
     parser.add_argument("schema_json", help="Path to the JSON schema file")
     parser.add_argument("output_json", help="Path to the output JSON file")
@@ -145,4 +156,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args.input_json, args.schema_json, args.output_json, args.mapping_json)
-

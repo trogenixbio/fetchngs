@@ -3,32 +3,88 @@
 import json
 import argparse
 
-def update_run_info(input_json_path, output_json_path, cloud_prefix):
+
+def update_run_info_metadata(
+    input_metadata_json_path, output_metadata_json_path, cloud_prefix
+):
     # Load input JSON data
-    with open(input_json_path, 'wr') as infile:
+    with open(input_metadata_json_path, "r") as infile:
         data = json.load(infile)
+
+    # Create a dictionary for fast access to experiments by their accession number
+    experiments = {exp["accession"]: exp for exp in data["experiment"]}
 
     updated_run = []
     for run in data["run"]:
+        experiment = experiments.get(run["experiment_accession"], {})
         # "file_1": "az://raw/results/fastq/DRX026011_DRR028935_1.fastq.gz",
         file_1 = run["file_1"].split("/")[-1]
         file_2 = run["file_1"].split("/")[-1]
-        run["file_1"] = f"{cloud_prefix}/fastq/"
-        run["file_2"] = f"{cloud_prefix}/fastq/"
+        run["file_1"] = (
+            f"{cloud_prefix}internal/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{file_1}"
+        )
+        run["file_2"] = (
+            f"{cloud_prefix}internal/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{file_2}"
+        )
         updated_run.append(run)
 
     # Update run information
     data["run"] = updated_run
 
     # Save the transformed data to a new JSON file
-    with open(output_json_path, 'w') as outfile:
+    with open(output_metadata_json_path, "w") as outfile:
         json.dump(data, outfile, indent=4)
 
+
+def update_run_info_samplesheet(
+    input_samplesheet_json_path, output_samplesheet_json_path, cloud_prefix
+):
+    # Load the JSON data
+    with open(input_samplesheet_json_path, "r") as file:
+        data = json.load(file)
+
+    # Modify the fastq_1 and fastq_2 paths
+    for item in data:
+        if "fastq_1" in item:
+            fastq_1 = item["fastq_1"].split("/")[-1]
+            item["fastq_1"] = (
+                f"{cloud_prefix}internal/{item['study_accession']}/{item['library_strategy']}/fastq/{fastq_1}"
+            )
+        if "fastq_2" in item:
+            fastq_2 = item["fastq_2"].split("/")[-1]
+            item["fastq_2"] = (
+                f"{cloud_prefix}internal/{item['study_accession']}/{item['library_strategy']}/fastq/{fastq_2}"
+            )
+
+    # Save the modified data to a new JSON file
+    with open(output_samplesheet_json_path, "w") as file:
+        json.dump(data, file, indent=4)
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract FASTQ file information from JSON based on experiment accession.")
-    parser.add_argument("input_json_path", help="Path to the input JSON file")
-    parser.add_argument("output_json_path", help="Path to the output JSON file")
-    parser.add_argument("cloud_prefix_path", help="Path to the cloud prefix to update")
+    parser = argparse.ArgumentParser(
+        description="Extract FASTQ file information from JSON based on experiment accession."
+    )
+    parser.add_argument(
+        "input_metadata_json_path", help="Path to the input metadata JSON file"
+    )
+    parser.add_argument(
+        "input_samplesheet_json_path", help="Path to the input samplesheet JSON file"
+    )
+    parser.add_argument(
+        "output_metadata_json_path", help="Path to the input metadata JSON file"
+    )
+    parser.add_argument(
+        "output_samplesheet_json_path", help="Path to the output samplesheet JSON file"
+    )
+    parser.add_argument("cloud_prefix", help="Path to the cloud prefix to update")
     args = parser.parse_args()
 
-    update_run_info(args.input_json_path, args.output_json_path, args.cloud_prefix)
+    update_run_info_metadata(
+        args.input_metadata_json_path, args.output_metadata_json_path, args.cloud_prefix
+    )
+    update_run_info_samplesheet(
+        args.input_samplesheet_json_path,
+        args.output_samplesheet_json_path,
+        args.cloud_prefix,
+    )

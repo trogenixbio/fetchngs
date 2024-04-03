@@ -67,6 +67,45 @@
                     "format": "file-path",
                     "description": "dbGaP repository key."
                 },
+                "cloud_prefix": {
+                    "type": "string",
+                    "help_text": "Cloud prefix required for Nextflow to pull data (e.g. az://, s3://)",
+                    "description": "Cloud prefix."
+                },
+                "metadata_schema": {
+                    "type": "string",
+                    "help_text": "Path to metadata template schema (ENA defined schema) used for checking metadata download and input.",
+                    "format": "file-path",
+                    "description": "Metadata schema json."
+                },
+                "mappings_json": {
+                    "type": "string",
+                    "help_text": "Path to metadata mapping json to map fields between ENA API download and template schema.",
+                    "format": "file-path",
+                    "description": "Metadata mapping json."
+                },
+                "metadata_sheet": {
+                    "type": "string",
+                    "fa_icon": "fas fa-address-card",
+                    "help_text": "Path to user supplied metadata sheet (either set of tsvs, or xlsx).",
+                    "format": "file-path",
+                    "description": "User supplied metadata sheet."
+                },
+                "is_excel": {
+                    "type": "boolean",
+                    "help_text": "If metadata sheet is excel or not",
+                    "description": "Is metadata sheet excel"
+                },
+                "pipeline_version": {
+                    "type": "string",
+                    "help_text": "Pipeline descriptor that will define run output prefix.",
+                    "description": "Pipeline descriptor."
+                },
+                "wf_timestamp": {
+                    "type": "string",
+                    "help_text": "Workflow timestamp used to distinguish between runs.",
+                    "description": "Workflow timestamp."
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",

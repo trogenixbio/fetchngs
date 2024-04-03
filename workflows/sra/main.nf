@@ -9,14 +9,17 @@ include { SRA_FASTQ_FTP           } from '../../modules/local/sra_fastq_ftp'
 include { SRA_IDS_TO_RUNINFO      } from '../../modules/local/sra_ids_to_runinfo'
 include { SRA_RUNINFO_TO_FTP      } from '../../modules/local/sra_runinfo_to_ftp'
 include { ASPERA_CLI              } from '../../modules/local/aspera_cli'
-include { SRA_TO_SAMPLESHEET      } from '../../modules/local/sra_to_samplesheet'
-include { SAMPLE_TO_JSON          } from '../../modules/local/sample_to_json'
+include { JSON_TO_SAMPLESHEET     } from '../../modules/local/json_to_samplesheet'
 include { JSON_TO_METADATA        } from '../../modules/local/json_to_metadata'
 include { CHECK_METADATA          } from '../../modules/local/check_metadata'
 include { LOAD_USER_METADATA      } from '../../modules/local/load_user_metadata'
 include { DOWNLOAD_USER_DATA      } from '../../modules/local/download_user_data'
 include { UPDATE_USER_JSON        } from '../../modules/local/update_user_json'
-include { SRA_FASTQ_FTP as SRA_FASTQ_FTP_INTERNAL } from '../../modules/local/sra_fastq_ftp'
+include { SRA_FASTQ_FTP as SRA_FASTQ_FTP_INTERNAL             } from '../../modules/local/sra_fastq_ftp'
+include { CHECK_METADATA as CHECK_METADATA_INTERNAL_1         } from '../../modules/local/check_metadata'
+include { CHECK_METADATA as CHECK_METADATA_INTERNAL_2         } from '../../modules/local/check_metadata'
+include { SRA_TO_SAMPLESHEET as SRA_TO_MAPPING                } from '../../modules/local/sra_to_samplesheet'
+include { JSON_TO_SAMPLESHEET as JSON_TO_SAMPLESHEET_INTERNAL } from '../../modules/local/json_to_samplesheet'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,8 +141,8 @@ workflow SRA {
                         def reads = fastq instanceof List ? fastq.flatten() : [ fastq ]
                         def meta_clone = meta.clone()
 
-                        meta_clone.fastq_1 = reads[0] ? "${params.cloud_prefix}${params.outdir}/fastq/${reads[0].getName()}" : ''
-                        meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${params.cloud_prefix}${params.outdir}/fastq/${reads[1].getName()}" : ''
+                        meta_clone.fastq_1 = reads[0] ? "${params.cloud_prefix}public/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[0].getName()}" : ''
+                        meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${params.cloud_prefix}public/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[1].getName()}" : ''
 
                         return meta_clone
                 }
@@ -185,6 +188,7 @@ workflow SRA {
             .set { ch_sra_metadata_pipeline_map }
 
         // Collect json file
+        // Map tax_id to taxon_id
         ch_sra_metadata_pipeline_map
             .map { it[1] }
             .collectFile( name:'testmeta.json') {
@@ -212,7 +216,7 @@ workflow SRA {
                 '\t\t' + '"instrument_platform": ' + '"' + it.instrument_platform.toString() + '"' + ',' + '\n' +
                 '\t\t' + '"base_count": ' + '"' + it.base_count.toString() + '"' + ',' + '\n' +
                 '\t\t' + '"read_count": ' + '"' + it.read_count.toString() + '"' + ',' + '\n' +
-                '\t\t' + '"tax_id": ' + '"' + it.tax_id.toString() + '"' + ',' + '\n' +
+                '\t\t' + '"taxon_id": ' + '"' + it.tax_id.toString() + '"' + ',' + '\n' +
                 '\t\t' + '"scientific_name": ' + '"' + it.scientific_name.toString() + '"' + ',' + '\n' +
                 '\t\t' + '"sample_title": ' + '"' + it.sample_title.toString() + '"' + ',' + '\n' +
                 '\t\t' + '"experiment_title": ' + '"' + it.experiment_title.toString() + '"' + ',' + '\n' +
@@ -241,25 +245,6 @@ workflow SRA {
             .set { ch_samplesheet_json }
 
         //
-        // MODULE: Stage FastQ files downloaded by SRA together and auto-create a samplesheet
-        //
-
-        SRA_TO_SAMPLESHEET (
-            ch_sra_metadata_pipeline_map,
-            params.sample_mapping_fields
-        )
-
-        // Merge samplesheets and mapping files across all samples
-        SRA_TO_SAMPLESHEET
-            .out
-            .samplesheet
-            .map { it[1] }
-            .collectFile(name:'tmp_samplesheet.csv', newLine: true, keepHeader: true, sort: { it.baseName })
-            .map { it.text.tokenize('\n').join('\n') }
-            .collectFile(name:'samplesheet.csv', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet")
-            .set { ch_samplesheet }
-
-        //
         // MODULE: Convert to metadata schema structure
         // outputs a set of tsvs per metadata schema for users to double check
 
@@ -280,8 +265,30 @@ workflow SRA {
         )
         ch_versions = ch_versions.mix(CHECK_METADATA.out.versions.first())
 
+        //
+        // MODULE: Convert JSON to samplesheet ready for pipeline runs
+        //
+        JSON_TO_SAMPLESHEET (
+            ch_samplesheet_json,
+            params.nf_core_pipeline ?: ''
+        )
+        ch_versions = ch_versions.mix(JSON_TO_SAMPLESHEET.out.versions.first())
+
+        // Set samplesheet channel
+        JSON_TO_SAMPLESHEET
+            .out
+            .samplesheet
+            .set { ch_samplesheet }
+        //
+        // MODULE: Stage FastQ files downloaded by SRA together and auto-create a samplesheet
+        //
+        SRA_TO_MAPPING (
+            ch_sra_metadata_pipeline_map,
+            params.sample_mapping_fields
+        )
+
         // Collect ID mappings for reference
-        SRA_TO_SAMPLESHEET
+        SRA_TO_MAPPING
             .out
             .mappings
             .map { it[1] }
@@ -301,7 +308,6 @@ workflow SRA {
             ch_versions = ch_versions.mix(MULTIQC_MAPPINGS_CONFIG.out.versions)
             ch_sample_mappings_yml = MULTIQC_MAPPINGS_CONFIG.out.yml
         }
-
     }
 
     //
@@ -316,18 +322,38 @@ workflow SRA {
         //
 
         LOAD_USER_METADATA (
-            params.metadata_sheet
+            params.metadata_sheet,
+            params.is_excel
         )
         ch_versions = ch_versions.mix(LOAD_USER_METADATA.out.versions.first())
+
         //
         // MODULE: Check Metadata
         //
 
-        CHECK_METADATA (
+        CHECK_METADATA_INTERNAL_1 (
             LOAD_USER_METADATA.out.metadata_json, // This will not be available to user supplied.
             params.metadata_schema
         )
-        ch_versions = ch_versions.mix(CHECK_METADATA.out.versions.first())
+        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_1.out.versions.first())
+
+        // define meta data for output
+        LOAD_USER_METADATA
+            .out
+            .samplesheet_json
+            .splitJson()
+            .map {
+                meta ->
+                    def meta_clone = meta.clone()
+                    if (meta_clone.fastq_2 == "") {
+                        meta_clone["single_end"] = true
+                    } else {
+                        meta_clone["single_end"] = false
+                    }
+                    return meta_clone
+            }
+            .unique()
+            .set { ch_sra_metadata }
 
         // Users may upload files directly to raw blob
         if (!params.skip_fastq_download) {
@@ -340,6 +366,9 @@ workflow SRA {
                     meta ->
                     // add path(s) of the fastq file(s) to the meta map
                     def fastq_meta = []
+
+                    meta["id"] = meta.sample + "_" + meta.run_accession
+
                     if(params.download_method == "ftp") {
                         if (meta.fastq_2 == "") {
                             meta["single_end"] = true
@@ -381,31 +410,57 @@ workflow SRA {
                 )
                 ch_versions = ch_versions.mix(DOWNLOAD_USER_DATA.out.versions.first())
             }
-
-            // META DATA MUST BE UPDATED WITH NEW LOCATION
-            UPDATE_USER_JSON (
-                LOAD_USER_METADATA.out.metadata_json,
-                params.cloud_prefix
-            )
-            ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions.first())
-
-            //
-            // MODULE: Check Metadata
-            //
-
-            CHECK_METADATA (
-                UPDATE_USER_JSON.out.metadata_json_update, // This will not be available to user supplied.
-                params.metadata_schema
-            )
-            ch_versions = ch_versions.mix(CHECK_METADATA.out.versions.first())
         }
+
+        //
+        // MODULE: Update metadata so files match with new location
+        //
+
+        UPDATE_USER_JSON (
+            LOAD_USER_METADATA.out.metadata_json,
+            LOAD_USER_METADATA.out.samplesheet_json,
+            params.cloud_prefix ?: params.outdir
+        )
+        ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions.first())
+
+        //
+        // MODULE: Check Metadata
+        //
+
+        CHECK_METADATA_INTERNAL_2 (
+            UPDATE_USER_JSON.out.metadata_json_update, // This will not be available to user supplied.
+            params.metadata_schema
+        )
+        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_2.out.versions.first())
+
+        //
+        // MODULE: Convert JSON to samplesheet ready for pipeline runs
+        //
+
+        JSON_TO_SAMPLESHEET_INTERNAL (
+            UPDATE_USER_JSON.out.samplesheet_json_update,
+            params.nf_core_pipeline ?: ''
+        )
+        ch_versions = ch_versions.mix(JSON_TO_SAMPLESHEET_INTERNAL.out.versions.first())
+
+        // Set samplesheet channel
+        JSON_TO_SAMPLESHEET_INTERNAL
+            .out
+            .samplesheet
+            .set { ch_samplesheet }
+
+        // define empty mapping channels for mqc
+        ch_sample_mappings_yml = Channel.empty()
+        ch_mappings            = Channel.empty()
     }
 
     //
     // Collate and save software versions
     //
+    def pub_internal = params.metadata_sheet ? "internal": "public"
+
     softwareVersionsToYAML(ch_versions)
-        .collectFile(storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
+        .collectFile(storeDir: "${params.outdir}/${pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
 
     emit:
     samplesheet     = ch_samplesheet
