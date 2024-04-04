@@ -39,7 +39,7 @@ include { softwareVersionsToYAML                       } from '../../subworkflow
 workflow SRA {
 
     take:
-    ids // channel: [ ids ]
+    ids // channel: [ ids ] or channel: file(metadata_sheet)
 
     main:
     ch_versions = Channel.empty()
@@ -322,10 +322,10 @@ workflow SRA {
         //
 
         LOAD_USER_METADATA (
-            params.metadata_sheet,
+            ids, // ids can be txt file or file(metadata_sheet)
             params.is_excel
         )
-        ch_versions = ch_versions.mix(LOAD_USER_METADATA.out.versions.first())
+        ch_versions = ch_versions.mix(LOAD_USER_METADATA.out.versions)
 
         //
         // MODULE: Check Metadata
@@ -335,7 +335,7 @@ workflow SRA {
             LOAD_USER_METADATA.out.metadata_json, // This will not be available to user supplied.
             params.metadata_schema
         )
-        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_1.out.versions.first())
+        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_1.out.versions)
 
         // define meta data for output
         LOAD_USER_METADATA
@@ -421,7 +421,7 @@ workflow SRA {
             LOAD_USER_METADATA.out.samplesheet_json,
             params.cloud_prefix ?: params.outdir
         )
-        ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions.first())
+        ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions)
 
         //
         // MODULE: Check Metadata
@@ -431,7 +431,7 @@ workflow SRA {
             UPDATE_USER_JSON.out.metadata_json_update, // This will not be available to user supplied.
             params.metadata_schema
         )
-        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_2.out.versions.first())
+        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_2.out.versions)
 
         //
         // MODULE: Convert JSON to samplesheet ready for pipeline runs
@@ -441,7 +441,7 @@ workflow SRA {
             UPDATE_USER_JSON.out.samplesheet_json_update,
             params.nf_core_pipeline ?: ''
         )
-        ch_versions = ch_versions.mix(JSON_TO_SAMPLESHEET_INTERNAL.out.versions.first())
+        ch_versions = ch_versions.mix(JSON_TO_SAMPLESHEET_INTERNAL.out.versions)
 
         // Set samplesheet channel
         JSON_TO_SAMPLESHEET_INTERNAL

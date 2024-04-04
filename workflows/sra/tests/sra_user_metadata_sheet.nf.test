@@ -1,0 +1,47 @@
+nextflow_workflow {
+
+    name "Test workflow: sra/main.nf"
+    script "../main.nf"
+    workflow "SRA"
+    tag "SRA_USER_METADATA_SHEET"
+
+    // Dependencies
+    tag "LOAD_USER_METADATA"
+    tag "CHECK_METADATA"
+    tag "SRA_FASTQ_FTP_INTERNAL"
+    tag "DOWNLOAD_USER_DATA"
+    tag "UPDATE_USER_JSON"
+    tag "JSON_TO_SAMPLESHEET"
+
+    test("Parameters: --metadata_sheet metadata_template_ERC000011_TRX_Meta_other.xlsx") {
+
+        when {
+            workflow {
+                """
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "metadata_template_ERC000011_TRX_Meta_other.xlsx", checkIfExists: true)
+                """
+            }
+            params {
+                skip_fastq_download = false
+                metadata_sheet = "${projectDir}/tests/local/metadata_template_ERC000011_TRX_Meta_other.xlsx"
+                download_method = ""
+            }
+        }
+
+        then {
+            assert workflow.success
+
+            assertAll(
+                {
+                    with(workflow.out.samplesheet) {
+                        assert path(get(0)).readLines().size() == 12
+                        assert path(get(0)).readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"']
+                        assert path(get(0)).readLines()*.split(',').collect { it[0] }.sort().unique() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"', '"DRX024467"', '"SRX17709227"', '"SRX17709228"', '"SRX9504942"', '"SRX9626017"'].sort()
+                        assert path(get(0)).text.contains('Illumina HiSeq 2500')
+                        assert path(get(0)).md5 == "0eec18291b04be4c007a5fd9006f791c"
+                    }
+                }
+            )
+        }
+    }
+}

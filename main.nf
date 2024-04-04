@@ -65,7 +65,8 @@ workflow {
         args,
         "${params.outdir}/${pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
         params.input,
-        params.ena_metadata_fields
+        params.ena_metadata_fields,
+        params.metadata_sheet
     )
 
     //
