@@ -1,0 +1,31 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    "metadata_update.json:md5,12d6c17a13edf5bd0eb26d3e31a8286e"
+                ],
+                "1": [
+                    "samplesheet_update.json:md5,dd557241cb05a294941bab12901b681d"
+                ],
+                "2": [
+                    "versions.yml:md5,60478d2155726f3d0a47ab9ae02ac879"
+                ],
+                "metadata_json_update": [
+                    "metadata_update.json:md5,12d6c17a13edf5bd0eb26d3e31a8286e"
+                ],
+                "samplesheet_json_update": [
+                    "samplesheet_update.json:md5,dd557241cb05a294941bab12901b681d"
+                ],
+                "versions": [
+                    "versions.yml:md5,60478d2155726f3d0a47ab9ae02ac879"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T15:21:01.899738289"
+    }
+}

@@ -4,16 +4,88 @@ nextflow_process {
     script "../main.nf"
     process "DOWNLOAD_USER_DATA"
 
-    test("Should run without failures") {
+    test("Should run without failures - with s3 md5check") {
 
         when {
             process {
                 """
                 input[0] = [
-                    [ sample:'SRX9626017_SRR13191702', single_end:false, md5_1: '89c5be920021a035084d8aeb74f32df7', md5_2: '56271be38a80db78ef3bdfc5d9909b98' ], // meta map
+                    [ id:'SRX9626017_SRR13191702', sample:'SRX9626017', single_end:false, md5_1: 'cfb2a2ee32c0bfb465f1287d441bea69', md5_2: 'ef99d9e789b8bba25e9788c4d4267b9c' ], // meta map
                     [
-                        's3://ngi-igenomes/testdata/nf-core/pipelines/rnaseq/3.15/genomics/sarscov2/illumina/fastq/test_1.fastq.gz',
-                        's3://ngi-igenomes/testdata/nf-core/pipelines/rnaseq/3.15/genomics/sarscov2/illumina/fastq/test_2.fastq.gz	'
+                        file('s3://ngi-igenomes/test-data/mag/ERR3201918_1.fastq.gz'),
+                        file('s3://ngi-igenomes/test-data/mag/ERR3201918_2.fastq.gz')
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("Should run without failures - with s3 no md5check") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'SRX9626017_SRR13191702', sample:'SRX9626017', single_end:false, md5_1: '', md5_2: '' ], // meta map
+                    [
+                        file('s3://ngi-igenomes/test-data/mag/ERR3201918_1.fastq.gz'),
+                        file('s3://ngi-igenomes/test-data/mag/ERR3201918_2.fastq.gz')
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("Should run without failures - with https no md5check") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'SRX9626017_SRR13191702', sample:'SRX9626017', single_end:false, md5_1: '', md5_2: '' ], // meta map
+                    [
+                        file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_1.fastq.gz'),
+                        file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_2.fastq.gz')
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("Should run without failures - with https and md5check") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'SRX9626017_SRR13191702', sample:'SRX9626017', single_end:false, md5_1: 'd19f3c7a8b4016fa641458257b99a1a1', md5_2: 'd126cc66ed169f69af2c07da0dd73e02' ], // meta map
+                    [
+                        file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_1.fastq.gz'),
+                        file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/testdata/GSE110004/SRR6357070_2.fastq.gz')
                     ]
                 ]
                 """

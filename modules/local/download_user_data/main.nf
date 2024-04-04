@@ -29,8 +29,8 @@ process DOWNLOAD_USER_DATA {
     if (meta.single_end) {
         """
         $echo_md5_single > ${meta.id}.fastq.gz.md5
-        $md5_1 ${meta.id}.fastq.gz.md5
         cp $fastq ${meta.id}.fastq.gz
+        $md5_1 ${meta.id}.fastq.gz.md5
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
@@ -40,12 +40,12 @@ process DOWNLOAD_USER_DATA {
     } else {
         """
         $echo_md5_1 > ${meta.id}_1.fastq.gz.md5
-        $md5_1 ${meta.id}_1.fastq.gz.md5
         cp ${fastq[0]} ${meta.id}_1.fastq.gz
+        $md5_1 ${meta.id}_1.fastq.gz.md5
 
         $echo_md5_2 > ${meta.id}_2.fastq.gz.md5
-        $md5_2 ${meta.id}_2.fastq.gz.md5
         cp ${fastq[1]} ${meta.id}_2.fastq.gz
+        $md5_2 ${meta.id}_2.fastq.gz.md5
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

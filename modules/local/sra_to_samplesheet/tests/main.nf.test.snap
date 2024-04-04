@@ -25,7 +25,7 @@
                             "md5_2": "5a62e8f785687dce890cfb4fe3e607f9",
                             "single_end": false
                         },
-                        "ERX1188904_ERR1109373.samplesheet.csv:md5,e7898191d57258e049ee7129d36f5c08"
+                        "ERX1188904_ERR1109373.samplesheet.csv:md5,0464794ee0d5a7406f07f96b36083f16"
                     ]
                 ],
                 "1": [
@@ -103,7 +103,7 @@
                             "md5_2": "5a62e8f785687dce890cfb4fe3e607f9",
                             "single_end": false
                         },
-                        "ERX1188904_ERR1109373.samplesheet.csv:md5,e7898191d57258e049ee7129d36f5c08"
+                        "ERX1188904_ERR1109373.samplesheet.csv:md5,0464794ee0d5a7406f07f96b36083f16"
                     ]
                 ]
             }
@@ -112,6 +112,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-02-28T11:51:38.244046"
+        "timestamp": "2024-04-04T15:16:32.052148562"
     }
 }

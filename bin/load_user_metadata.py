@@ -54,8 +54,11 @@ def read_excel_to_dict(filepath):
 
 def read_tsv_to_dict(filenames):
     data = {}
+    names = ["experiment", "study", "run", "sample"]
     for filename in filenames:
         entity_name = filename.split(".")[0]  # Assumes filename format "entity.tsv"
+        if entity_name not in names:
+            raise ValueError(f"Filename '{entity_name}' must match schema - {names}")
         df = pd.read_csv(filename, delimiter="\t", skiprows=[1])
         df.drop_duplicates(inplace=True)
         df.fillna("", inplace=True)
@@ -76,11 +79,13 @@ def extract_fastq_info(data, output_json_path):
         experiment = experiments.get(run["experiment_accession"], {})
         sample = samples.get(experiment.get("sample_accession"), {})
 
-        md5_1 = run["metadata"].get("fastq_md5", "").split(";")[0]
-        if len(run["metadata"].get("fastq_md5", "").split(";")) > 1:
-            md5_2 = run["metadata"].get("fastq_md5", "").split(";")[1]
-        else:
-            md5_2 = ""
+        md5_1 = ""
+        md5_2 = ""
+        if "metadata" in run:
+            md5_1 = run["metadata"].get("fastq_md5", "").split(";")[0]
+            if len(run["metadata"].get("fastq_md5", "").split(";")) > 1:
+                md5_2 = run["metadata"].get("fastq_md5", "").split(";")[1]
+
         sample_dict = {
             "sample": run["experiment_accession"],
             "fastq_1": run.get("file_1", ""),

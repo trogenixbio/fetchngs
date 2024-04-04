@@ -50,9 +50,33 @@ nextflow_process {
             process {
                 """
                 ch_tsv = Channel.fromPath( ["$baseDir" + "/" + params.modules_testdata_base_path_local + "study.tsv",
-                                                "$baseDir" + "/" + params.modules_testdata_base_path_local + "experiment.tsv",
-                                                "$baseDir" + "/" + params.modules_testdata_base_path_local + "sample.tsv",
-                                                "$baseDir" + "/" + params.modules_testdata_base_path_local + "run.tsv"] )
+                                            "$baseDir" + "/" + params.modules_testdata_base_path_local + "experiment.tsv",
+                                            "$baseDir" + "/" + params.modules_testdata_base_path_local + "sample.tsv",
+                                            "$baseDir" + "/" + params.modules_testdata_base_path_local + "run.tsv"] )
+                input[0] = ch_tsv.collect()
+                input[1] = false
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Load in TSV set no metadata") {
+
+        when {
+            process {
+                """
+                ch_tsv = Channel.fromPath( ["$baseDir" + "/" + params.modules_testdata_base_path_local + "load_user_metadata/study.tsv",
+                                            "$baseDir" + "/" + params.modules_testdata_base_path_local + "load_user_metadata/experiment.tsv",
+                                            "$baseDir" + "/" + params.modules_testdata_base_path_local + "load_user_metadata/sample.tsv",
+                                            "$baseDir" + "/" + params.modules_testdata_base_path_local + "load_user_metadata/run.tsv"] )
                 input[0] = ch_tsv.collect()
                 input[1] = false
                 """

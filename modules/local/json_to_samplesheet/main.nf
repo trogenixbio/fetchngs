@@ -16,9 +16,9 @@ process JSON_TO_SAMPLESHEET {
     path "versions.yml"         , emit: versions
 
     script:
-    def pipeline     = "${nf_core_pipeline}" ?: ''
-    def include = ''
-    def exclude = 'strandedness,replicate,fasta'
+    def pipeline = "${nf_core_pipeline}" ?: ''
+    def include  = ''
+    def exclude  = 'strandedness,replicate,fasta'
 
     if (pipeline) {
         if (pipeline == 'rnaseq') {

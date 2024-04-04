@@ -9,7 +9,9 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = "metadata.json"
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "metadata.json", checkIfExists: true)
+                input[1] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
+                input[2] = "az://raw/"
                 """
             }
         }

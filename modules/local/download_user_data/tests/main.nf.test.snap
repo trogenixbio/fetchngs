@@ -1,0 +1,387 @@
+{
+    "Should run without failures - with https and md5check": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "d19f3c7a8b4016fa641458257b99a1a1",
+                            "md5_2": "d126cc66ed169f69af2c07da0dd73e02"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,e5f87bae86ec751571dbf3b1aa0c748a",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,dcdee33320a67180256dfd4bc4353173"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "d19f3c7a8b4016fa641458257b99a1a1",
+                            "md5_2": "d126cc66ed169f69af2c07da0dd73e02"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,f6f450e9cb404c772457f9fa7345f1d9",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,e78a2b1172e8778d5833ab4e3653fdb4"
+                        ]
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ],
+                "fastq": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "d19f3c7a8b4016fa641458257b99a1a1",
+                            "md5_2": "d126cc66ed169f69af2c07da0dd73e02"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,e5f87bae86ec751571dbf3b1aa0c748a",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,dcdee33320a67180256dfd4bc4353173"
+                        ]
+                    ]
+                ],
+                "md5": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "d19f3c7a8b4016fa641458257b99a1a1",
+                            "md5_2": "d126cc66ed169f69af2c07da0dd73e02"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,f6f450e9cb404c772457f9fa7345f1d9",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,e78a2b1172e8778d5833ab4e3653fdb4"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T11:40:59.137333569"
+    },
+    "Should run without failures - with s3 md5check": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,ca9b49b42211256307d15b226a6082c6",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,9244c3a83ae8dae057b137f06c101030"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,1ab088890638dccd1d76d8483d330468",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,a1df8810780058996cc86a2fe9b7a27d"
+                        ]
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ],
+                "fastq": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,ca9b49b42211256307d15b226a6082c6",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,9244c3a83ae8dae057b137f06c101030"
+                        ]
+                    ]
+                ],
+                "md5": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,1ab088890638dccd1d76d8483d330468",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,a1df8810780058996cc86a2fe9b7a27d"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T11:20:32.7751797"
+    },
+    "Should run without failures - with s3 no md5check": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,ca9b49b42211256307d15b226a6082c6",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,9244c3a83ae8dae057b137f06c101030"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,fb789e5065dc1077479cc38dd5151017",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,ccf542a78280906897bee94f231ddb69"
+                        ]
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ],
+                "fastq": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,ca9b49b42211256307d15b226a6082c6",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,9244c3a83ae8dae057b137f06c101030"
+                        ]
+                    ]
+                ],
+                "md5": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,fb789e5065dc1077479cc38dd5151017",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,ccf542a78280906897bee94f231ddb69"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T11:25:28.893431867"
+    },
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,ca9b49b42211256307d15b226a6082c6",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,9244c3a83ae8dae057b137f06c101030"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,1ab088890638dccd1d76d8483d330468",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,a1df8810780058996cc86a2fe9b7a27d"
+                        ]
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ],
+                "fastq": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,ca9b49b42211256307d15b226a6082c6",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,9244c3a83ae8dae057b137f06c101030"
+                        ]
+                    ]
+                ],
+                "md5": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "cfb2a2ee32c0bfb465f1287d441bea69",
+                            "md5_2": "ef99d9e789b8bba25e9788c4d4267b9c"
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,1ab088890638dccd1d76d8483d330468",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,a1df8810780058996cc86a2fe9b7a27d"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T11:11:52.810121054"
+    },
+    "Should run without failures - with https no md5check": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,e5f87bae86ec751571dbf3b1aa0c748a",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,dcdee33320a67180256dfd4bc4353173"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,fb789e5065dc1077479cc38dd5151017",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,ccf542a78280906897bee94f231ddb69"
+                        ]
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ],
+                "fastq": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz:md5,e5f87bae86ec751571dbf3b1aa0c748a",
+                            "SRX9626017_SRR13191702_2.fastq.gz:md5,dcdee33320a67180256dfd4bc4353173"
+                        ]
+                    ]
+                ],
+                "md5": [
+                    [
+                        {
+                            "id": "SRX9626017_SRR13191702",
+                            "sample": "SRX9626017",
+                            "single_end": false,
+                            "md5_1": "",
+                            "md5_2": ""
+                        },
+                        [
+                            "SRX9626017_SRR13191702_1.fastq.gz.md5:md5,fb789e5065dc1077479cc38dd5151017",
+                            "SRX9626017_SRR13191702_2.fastq.gz.md5:md5,ccf542a78280906897bee94f231ddb69"
+                        ]
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,08c1445fdb973c394f6d470bca322c27"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T11:33:21.500797463"
+    }
+}
