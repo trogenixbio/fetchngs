@@ -11,6 +11,10 @@ include { SRA_RUNINFO_TO_FTP      } from '../../modules/local/sra_runinfo_to_ftp
 include { ASPERA_CLI              } from '../../modules/local/aspera_cli'
 include { SRA_TO_SAMPLESHEET      } from '../../modules/local/sra_to_samplesheet'
 include { softwareVersionsToYAML  } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { paramsSummaryMultiqc    } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
+include { FASTQC                  } from '../../modules/nf-core/fastqc'
+include { MULTIQC                 } from '../../modules/nf-core/multiqc'
+include { paramsSummaryMap        } from 'plugin/nf-validation'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,7 +36,9 @@ workflow SRA {
     ids // channel: [ ids ]
 
     main:
-    ch_versions = Channel.empty()
+
+    ch_multiqc_files = Channel.empty()
+    ch_versions      = Channel.empty()
 
     //
     // MODULE: Get SRA run information for public database ids
@@ -164,6 +170,34 @@ workflow SRA {
         .set { ch_mappings }
 
     //
+    // Define meta fq channel for QC
+    //
+    ch_meta_fq = Channel.empty()
+    if (params.download_method == "sratools") {
+        FASTQ_DOWNLOAD_PREFETCH_FASTERQDUMP_SRATOOLS.out.reads.set { ch_meta_fq }
+    }
+    if (params.download_method == "aspera") {
+        ASPERA_CLI.out.fastq.set { ch_meta_fq }
+    }
+    if (params.download_method == "ftp") {
+        SRA_FASTQ_FTP.out.fastq.set { ch_meta_fq }
+    }
+
+    //
+    // MODULE: FastQC - quick run prior to further processing
+    //
+    ch_versions = Channel.empty()
+    fastqc_html = Channel.empty()
+    fastqc_zip  = Channel.empty()
+    if (!params.skip_fastqc) {
+        FASTQC (ch_meta_fq)
+        fastqc_html = FASTQC.out.html
+        fastqc_zip  = FASTQC.out.zip
+        ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+        ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
+    }
+
+    //
     // MODULE: Create a MutiQC config file with sample name mappings
     //
     ch_sample_mappings_yml = Channel.empty()
@@ -180,12 +214,36 @@ workflow SRA {
     //
     softwareVersionsToYAML(ch_versions)
         .collectFile(storeDir: "${params.outdir}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
+        .set { ch_collated_versions }
+
+    //
+    // MODULE: MultiQC
+    //
+    ch_multiqc_report = Channel.empty()
+    if (!params.skip_multiqc) {
+        ch_multiqc_config        = Channel.fromPath("$projectDir/workflows/assets/multiqc/fetchngs_multiqc_config.yml", checkIfExists: true)
+        ch_multiqc_custom_config = ch_sample_mappings_yml
+        ch_multiqc_logo          = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo)   : Channel.empty()
+        summary_params           = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+        ch_workflow_summary      = Channel.value(paramsSummaryMultiqc(summary_params))
+        ch_multiqc_files         = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
+        ch_multiqc_files         = ch_multiqc_files.mix(ch_collated_versions)
+
+        MULTIQC (
+            ch_multiqc_files.collect(),
+            ch_multiqc_config.toList(),
+            ch_multiqc_custom_config.toList(),
+            ch_multiqc_logo.toList()
+        )
+        ch_multiqc_report = MULTIQC.out.report
+    }
 
     emit:
     samplesheet     = ch_samplesheet
     mappings        = ch_mappings
     sample_mappings = ch_sample_mappings_yml
     sra_metadata    = ch_sra_metadata
+    multiqc_report  = ch_multiqc_report // channel: /path/to/multiqc_report.html
     versions        = ch_versions.unique()
 }
 

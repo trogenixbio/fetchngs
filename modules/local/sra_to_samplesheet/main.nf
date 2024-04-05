@@ -30,10 +30,13 @@ process SRA_TO_SAMPLESHEET {
     meta_clone.remove("single_end")
 
     // Add relevant fields to the beginning of the map
+    def cloud_prefix_fq1 = "${params.cloud_prefix}" ?: ''
+    def cloud_prefix_fq2 = "${meta.fastq_2}" ? "${params.cloud_prefix}" : ''
+
     pipeline_map = [
         sample  : "${meta.id.split('_')[0..-2].join('_')}",
-        fastq_1 : meta.fastq_1,
-        fastq_2 : meta.fastq_2
+        fastq_1 : "${cloud_prefix_fq1}${meta.fastq_1}",
+        fastq_2 : "${cloud_prefix_fq2}${meta.fastq_2}"
     ]
 
     // Add nf-core pipeline specific entries
