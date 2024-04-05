@@ -3,13 +3,13 @@
         "content": [
             {
                 "0": [
-                    "SRR13191702.runinfo_ftp.tsv:md5,94378c448c044b3e20e5c54e442ab62e"
+                    "GSE214215.runinfo_ftp.json:md5,ddefdf7230e79e60e6afce91450ffb9a"
                 ],
                 "1": [
                     "versions.yml:md5,e95f8185f665127a73622a19d321bcca"
                 ],
-                "tsv": [
-                    "SRR13191702.runinfo_ftp.tsv:md5,94378c448c044b3e20e5c54e442ab62e"
+                "json": [
+                    "GSE214215.runinfo_ftp.json:md5,ddefdf7230e79e60e6afce91450ffb9a"
                 ],
                 "versions": [
                     "versions.yml:md5,e95f8185f665127a73622a19d321bcca"
@@ -20,6 +20,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-02-28T11:51:45.748227"
+        "timestamp": "2024-04-04T15:12:27.58661199"
     }
 }

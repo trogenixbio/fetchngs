@@ -19,6 +19,15 @@ process SRA_FASTQ_FTP {
 
     script:
     def args = task.ext.args ?: ''
+
+    def echo_md5_single = meta.md5_1 ? "echo '${meta.md5_1}  ${meta.id}.fastq.gz'": "echo 'No md5sum available for ${meta.id}.fastq.gz'"
+
+    def echo_md5_1 = meta.md5_1 ? "echo '${meta.md5_1}  ${meta.id}_1.fastq.gz'": "echo 'No md5sum available for ${meta.id}_1.fastq.gz'"
+    def echo_md5_2 = meta.md5_2 ? "echo '${meta.md5_2}  ${meta.id}_2.fastq.gz'": "echo 'No md5sum available for ${meta.id}_2.fastq.gz'"
+
+    def md5_1 = meta.md5_1 ? "md5sum -c": "touch "
+    def md5_2 = meta.md5_2 ? "md5sum -c": "touch "
+
     if (meta.single_end) {
         """
         wget \\
@@ -26,8 +35,8 @@ process SRA_FASTQ_FTP {
             -O ${meta.id}.fastq.gz \\
             ${fastq[0]}
 
-        echo "${meta.md5_1}  ${meta.id}.fastq.gz" > ${meta.id}.fastq.gz.md5
-        md5sum -c ${meta.id}.fastq.gz.md5
+        $echo_md5_single > ${meta.id}.fastq.gz.md5
+        $md5_1 ${meta.id}.fastq.gz.md5
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
@@ -41,16 +50,16 @@ process SRA_FASTQ_FTP {
             -O ${meta.id}_1.fastq.gz \\
             ${fastq[0]}
 
-        echo "${meta.md5_1}  ${meta.id}_1.fastq.gz" > ${meta.id}_1.fastq.gz.md5
-        md5sum -c ${meta.id}_1.fastq.gz.md5
+        $echo_md5_1 > ${meta.id}_1.fastq.gz.md5
+        $md5_1 ${meta.id}_1.fastq.gz.md5
 
         wget \\
             $args \\
             -O ${meta.id}_2.fastq.gz \\
             ${fastq[1]}
 
-        echo "${meta.md5_2}  ${meta.id}_2.fastq.gz" > ${meta.id}_2.fastq.gz.md5
-        md5sum -c ${meta.id}_2.fastq.gz.md5
+        $echo_md5_2 > ${meta.id}_2.fastq.gz.md5
+        $md5_2 ${meta.id}_2.fastq.gz.md5
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

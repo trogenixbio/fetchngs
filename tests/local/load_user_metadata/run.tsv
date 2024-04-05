@@ -1,0 +1,15 @@
+accession	alias	experiment_accession	file_1	file_2
+DRR026872	DRR026872	DRX024467	az://raw/results/fastq/DRX024467_DRR026872.fastq.gz
+DRR028935	DRR028935	DRX026011	az://raw/results/fastq/DRX026011_DRR028935_1.fastq.gz	az://raw/results/fastq/DRX026011_DRR028935_2.fastq.gz
+ERR1160846	qiita_ppdid_706:10317.BLANK.93.3E.r22	ERX1234253	az://raw/results/fastq/ERX1234253_ERR1160846.fastq.gz
+SRR14593545	577-6_530058_19-037147 Goat_F.ab1	SRX10940790	az://raw/results/fastq/SRX10940790_SRR14593545_1.fastq.gz	az://raw/results/fastq/SRX10940790_SRR14593545_2.fastq.gz
+SRR14709033	Sebastes_levis-2.fastq	SRX11047067	az://raw/results/fastq/SRX11047067_SRR14709033.fastq.gz
+SRR21711856	GSM6601460_r1	SRX17709227	az://raw/results/fastq/SRX17709227_SRR21711856.fastq.gz
+SRR21711855	GSM6601461_r1	SRX17709228	az://raw/results/fastq/SRX17709228_SRR21711855.fastq.gz
+SRR9984183	Emb289P1_bin131.fastq	SRX6725035	az://raw/results/fastq/SRX6725035_SRR9984183.fastq.gz
+SRR12848126	Longshanks_F11-N1-05_haplo.pMarkdup.chr3_focal.bam	SRX9315476	az://raw/results/fastq/SRX9315476_SRR12848126_1.fastq.gz	az://raw/results/fastq/SRX9315476_SRR12848126_2.fastq.gz
+SRR13055517	GSM4907283_r1	SRX9504942	az://raw/results/fastq/SRX9504942_SRR13055517_1.fastq.gz	az://raw/results/fastq/SRX9504942_SRR13055517_2.fastq.gz
+SRR13055518	GSM4907283_r2	SRX9504942	az://raw/results/fastq/SRX9504942_SRR13055518_1.fastq.gz	az://raw/results/fastq/SRX9504942_SRR13055518_2.fastq.gz
+SRR13055519	GSM4907283_r3	SRX9504942	az://raw/results/fastq/SRX9504942_SRR13055519_1.fastq.gz	az://raw/results/fastq/SRX9504942_SRR13055519_2.fastq.gz
+SRR13055520	GSM4907283_r4	SRX9504942	az://raw/results/fastq/SRX9504942_SRR13055520_1.fastq.gz	az://raw/results/fastq/SRX9504942_SRR13055520_2.fastq.gz
+SRR13191702	S.170804.00784_662_L001_R1_001.fastq.gz	SRX9626017	az://raw/results/fastq/SRX9626017_SRR13191702_1.fastq.gz	az://raw/results/fastq/SRX9626017_SRR13191702_2.fastq.gz

@@ -1,0 +1,15 @@
+accession	alias	title	taxon_id	sample_description	cell_type	tissue_type	collected_by	collection_date	sex	cell_line
+SAMD00023098	SAMD00023098	F2 plant dreived from a cross between Tokyo Kokei-standard and Africa #21	35883	Keywords: GSC:MIxS MIGS:6.0
+SAMD00024405	SAMD00024405	Botryococcus braunii Showa at day 0 after inoculation into fresh culture medium	1202541	Liquid culture
+SAMEA3687214	qiita_sid_10317:10317.BLANK.93.3E.r22	10317.BLANK.93.3E.r22	256318	American Gut control
+SAMN19097423	prp_2765	MIGS Eukaryotic sample from Capra hircus	9925	Keywords: GSC:MIxS MIGS:5.0
+SAMN19373034	S._macdonaldi-1	Sebastes_macdonaldi-1	394693	Sebastes_macdonaldi-1		fin clip or muscle
+SAMN31021823	GSM6601460	sham-treated worms in day 5	6239	sham-treated worms in day 5		whole organism
+SAMN31021822	GSM6601461	PM2.5-treated worms in day 5	6239	PM2.5-treated worms in day 5		whole organism
+SAMN12581720	Emb289P1_bin131	MIMAG Metagenome-assembled Genome sample from Defluviitaleaceae bacterium	2660712	Keywords: GSC:MIxS MIMAG:5.0
+SAMN16455283	F11-N1-05	Longshanks_F11-N1-05	10092	F11-N1-05		ear clips
+SAMN16793052	GSM4907283	A20-35 A11A20-35 A11_ROI009PanCK+	9606	A20-35 A11A20-35 A11_ROI009PanCK+
+SAMN16793052	GSM4907283	A20-35 A11A20-35 A11_ROI009PanCK+	9606	A20-35 A11A20-35 A11_ROI009PanCK+
+SAMN16793052	GSM4907283	A20-35 A11A20-35 A11_ROI009PanCK+	9606	A20-35 A11A20-35 A11_ROI009PanCK+
+SAMN16793052	GSM4907283	A20-35 A11A20-35 A11_ROI009PanCK+	9606	A20-35 A11A20-35 A11_ROI009PanCK+
+SAMN16980141	S.170804.00784_662	Metagenome or environmental sample from human gut metagenome	408170	Metagenome or environmental sample from human gut metagenome						human gut metagenome

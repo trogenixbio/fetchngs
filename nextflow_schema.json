@@ -16,17 +16,16 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "schema": "assets/schema_input.json",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.(csv|tsv|txt)$",
+                    "pattern": "^\\S+\\.(csv|tsv|txt|xlsx)$",
                     "fa_icon": "fas fa-file-excel",
-                    "description": "File containing SRA/ENA/GEO/DDBJ identifiers one per line to download their associated metadata and FastQ files."
+                    "description": "File containing SRA/ENA/GEO/DDBJ identifiers one per line to download their associated metadata and FastQ files. Or path to user supplied metadata sheet (either set of tsvs, or xlsx)"
                 },
                 "ena_metadata_fields": {
                     "type": "string",
                     "fa_icon": "fas fa-columns",
                     "description": "Comma-separated list of ENA metadata fields to fetch before downloading data.",
-                    "help_text": "The default list of fields used by the pipeline can be found at the top of the [`bin/sra_ids_to_runinfo.py`](https://github.com/nf-core/fetchngs/blob/master/bin/sra_ids_to_runinfo.py) script within the pipeline repo. This pipeline requires a minimal set of fields to download FastQ files i.e. `'run_accession,experiment_accession,library_layout,fastq_ftp,fastq_md5'`. Full list of accepted metadata fields can be obtained from the [ENA API](https://www.ebi.ac.uk/ena/portal/api/returnFields?dataPortal=ena&format=tsv&result=read_run)."
+                    "help_text": "The default list of fields used by the pipeline can be found at the top of the [`bin/sra_ids_to_runinfo.py`](https://github.com/nf-core/fetchngs/blob/master/bin/sra_ids_to_runinfo.py) script within the pipeline repo. This pipeline requires a minimal set of fields to download FastQ files i.e. `'run_accession,experiment_accession,library_layout,fastq_ftp,fastq_md5'`. Full list of accepted metadata fields can be obtained from the [ENA API](https://www.ebi.ac.uk/ena/portal/api/returnFields?dataPortal=ena&format=tsv&result=read_run).",
+                    "hidden": true
                 },
                 "sample_mapping_fields": {
                     "type": "string",
@@ -66,6 +65,51 @@
                     "help_text": "Path to a JWT cart file used to access protected dbGAP data on SRA using the sra-toolkit. Users with granted access to controlled data can download the JWT cart file for the study from the SRA Run Selector upon logging in. The JWT file can only be used on cloud platforms and is valid for 1 hour upon creation.",
                     "format": "file-path",
                     "description": "dbGaP repository key."
+                },
+                "cloud_prefix": {
+                    "type": "string",
+                    "help_text": "Cloud prefix required for Nextflow to pull data (e.g. az://, s3://) - in standard cloud setting this information will instead be pulled from outdir",
+                    "description": "Cloud prefix.",
+                    "hidden": true,
+                    "default": null
+                },
+                "metadata_schema": {
+                    "type": "string",
+                    "help_text": "Path to metadata template schema (ENA defined schema) used for checking metadata download and input.",
+                    "format": "file-path",
+                    "description": "Metadata schema json."
+                },
+                "mappings_json": {
+                    "type": "string",
+                    "help_text": "Path to metadata mapping json to map fields between ENA API download and template schema.",
+                    "format": "file-path",
+                    "description": "Metadata mapping json."
+                },
+                "metadata_sheet": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-address-card",
+                    "help_text": "Boolean if path to user supplied metadata sheet (either set of tsvs, or xlsx) has been provided.",
+                    "description": "Has user supplied metadata sheet been provided as input?"
+                },
+                "is_excel": {
+                    "type": "boolean",
+                    "help_text": "If metadata sheet is excel or not",
+                    "description": "Is metadata sheet excel"
+                },
+                "pipeline_version": {
+                    "type": "string",
+                    "help_text": "Pipeline descriptor that will define run output prefix.",
+                    "description": "Pipeline descriptor."
+                },
+                "wf_timestamp": {
+                    "type": "string",
+                    "help_text": "Workflow timestamp used to distinguish between runs.",
+                    "description": "Workflow timestamp."
+                },
+                "pub_internal": {
+                    "type": "string",
+                    "help_text": "Defines final location of data - public or internal buckets.",
+                    "description": "Public/internal output dir."
                 },
                 "outdir": {
                     "type": "string",

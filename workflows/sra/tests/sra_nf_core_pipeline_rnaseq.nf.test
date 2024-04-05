@@ -22,6 +22,7 @@ nextflow_workflow {
             }
             params {
                 nf_core_pipeline = "rnaseq"
+                outdir = "results"
             }
         }
 
@@ -33,14 +34,15 @@ nextflow_workflow {
                     with(workflow.out.samplesheet) {
                         assert path(get(0)).readLines().size() == 4
                         assert path(get(0)).readLines()*.split(',')[0].take(5) == ['"sample"', '"fastq_1"', '"fastq_2"', '"strandedness"' , '"run_accession"']
-                        assert path(get(0)).readLines()*.split(',').collect { it[0] } == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"']
+                        assert path(get(0)).readLines()*.split(',').collect { it[0] }.sort() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"'].sort()
                         assert path(get(0)).text.contains('Illumina HiSeq 2500')
+                        assert path(get(0)).md5 == "af2ea438e6792553af579e1133157d8c"
                     }
                 },
                 {
                     with(workflow.out.mappings) {
                         assert path(get(0)).readLines().size() == 4
-                        assert path(get(0)).readLines()*.split(',').collect { it[0] } == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"']
+                        assert path(get(0)).readLines()*.split(',').collect { it[0] }.sort() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"'].sort()
                         assert path(get(0)).text.contains('Illumina HiSeq 2500')
                     }
                 },

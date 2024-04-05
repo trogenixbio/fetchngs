@@ -61,9 +61,10 @@ workflow {
         params.validate_params,
         params.monochrome_logs,
         args,
-        params.outdir,
+        "${params.outdir}/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
         params.input,
-        params.ena_metadata_fields
+        params.ena_metadata_fields,
+        params.metadata_sheet
     )
 
     //
@@ -80,7 +81,7 @@ workflow {
         params.email,
         params.email_on_fail,
         params.plaintext_email,
-        params.outdir,
+        "${params.outdir}/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
         params.monochrome_logs,
         params.hook_url
     )

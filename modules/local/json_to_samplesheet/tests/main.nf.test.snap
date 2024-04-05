@@ -1,0 +1,94 @@
+{
+    "Should run without failures - atacseq": {
+        "content": [
+            {
+                "0": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "1": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ],
+                "samplesheet": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "versions": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T13:37:13.959099735"
+    },
+    "Should run without failures - rnaseq": {
+        "content": [
+            {
+                "0": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "1": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ],
+                "samplesheet": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "versions": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T13:37:04.603093493"
+    },
+    "Should run without failures - taxprofiler": {
+        "content": [
+            {
+                "0": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "1": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ],
+                "samplesheet": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "versions": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T13:37:23.121683771"
+    },
+    "Should run without failures - empty": {
+        "content": [
+            {
+                "0": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "1": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ],
+                "samplesheet": [
+                    "samplesheet.csv:md5,92bcb32506bd1c8be02b0767420fbf8c"
+                ],
+                "versions": [
+                    "versions.yml:md5,44e7d59dcc70c98c584aaa78bf3a166f"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T13:36:54.896842335"
+    }
+}

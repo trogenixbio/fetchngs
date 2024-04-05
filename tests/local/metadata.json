@@ -1,0 +1,766 @@
+{
+    "study": [
+        {
+            "accession": "PRJDB4356",
+            "alias": "DRP003256",
+            "title": "The Japanese morning glory genome sequence",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJDB3420",
+            "alias": "DRP002616",
+            "title": "Liquid culture of Botryococcus braunii, race B, Showa",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJEB11419",
+            "alias": "qiita_sid_10317",
+            "title": "American Gut Project",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA728650",
+            "alias": "PRJNA728650",
+            "title": "Capra hircus Raw sequence reads",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA733285",
+            "alias": "PRJNA733285",
+            "title": "MiSebastes: An eDNA metabarcoding primer set for rockfishes (genus Sebastes)",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA884373",
+            "alias": "GSE214215",
+            "title": "PM2.5 exposure induces lifespan reduction in Caenorhabditis elegans",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA884373",
+            "alias": "GSE214215",
+            "title": "PM2.5 exposure induces lifespan reduction in Caenorhabditis elegans",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA560329",
+            "alias": "PRJNA560329",
+            "title": "Phylogenomic analysis of 589 metagenome-assembled genomes encompassing all major prokaryotic lineages from the gut of higher termites",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA670070",
+            "alias": "PRJNA670070",
+            "title": "Haplotype tagging reveals parallel formation of hybrid races in two butterfly species",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA678298",
+            "alias": "GSE159787",
+            "title": "Temporal and Spatial Heterogeneity of Host Response to SARS-CoV-2 Pulmonary Infection [gene expression]",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA678298",
+            "alias": "GSE159787",
+            "title": "Temporal and Spatial Heterogeneity of Host Response to SARS-CoV-2 Pulmonary Infection [gene expression]",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA678298",
+            "alias": "GSE159787",
+            "title": "Temporal and Spatial Heterogeneity of Host Response to SARS-CoV-2 Pulmonary Infection [gene expression]",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA678298",
+            "alias": "GSE159787",
+            "title": "Temporal and Spatial Heterogeneity of Host Response to SARS-CoV-2 Pulmonary Infection [gene expression]",
+            "study_type": "",
+            "study_abstract": ""
+        },
+        {
+            "accession": "PRJNA682076",
+            "alias": "PRJNA682076",
+            "title": "Stool Microbiome Features to Discriminate Clostridium Difficile Colonization and Infection",
+            "study_type": "",
+            "study_abstract": ""
+        }
+    ],
+    "experiment": [
+        {
+            "accession": "DRX024467",
+            "alias": "DRX024467",
+            "title": "Illumina HiSeq 2500 sequencing: Illumina HiSeq 2500 sequencing of SAMD00023098",
+            "study_accession": "PRJDB4356",
+            "sample_accession": "SAMD00023098",
+            "design_description": "",
+            "library_name": "IpeRAD1_3",
+            "library_strategy": "OTHER",
+            "library_source": "GENOMIC",
+            "library_selection": "Restriction Digest",
+            "library_layout": "SINGLE",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 2500"
+        },
+        {
+            "accession": "DRX026011",
+            "alias": "DRX026011",
+            "title": "Illumina HiSeq 2500 paired end sequencing: Illumina HiSeq 2500 paired end sequencing of SAMD00024405",
+            "study_accession": "PRJDB3420",
+            "sample_accession": "SAMD00024405",
+            "design_description": "",
+            "library_name": "day0_BbSQE-I",
+            "library_strategy": "RNA-Seq",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "cDNA",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 2500"
+        },
+        {
+            "accession": "ERX1234253",
+            "alias": "qiita_ptid_1263:10317.BLANK.93.3E.r22",
+            "title": "Illumina HiSeq 2500 sequencing: qiita_ptid_1263:10317.BLANK.93.3E.r22",
+            "study_accession": "PRJEB11419",
+            "sample_accession": "SAMEA3687214",
+            "design_description": "",
+            "library_name": "10317.BLANK.93.3E.r22",
+            "library_strategy": "AMPLICON",
+            "library_source": "METAGENOMIC",
+            "library_selection": "PCR",
+            "library_layout": "SINGLE",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 2500"
+        },
+        {
+            "accession": "SRX10940790",
+            "alias": "PRNP_2765",
+            "title": "AB 3500xL Genetic Analyzer sequencing: prp_2765",
+            "study_accession": "PRJNA728650",
+            "sample_accession": "SAMN19097423",
+            "design_description": "",
+            "library_name": "PRNP_2765",
+            "library_strategy": "AMPLICON",
+            "library_source": "GENOMIC",
+            "library_selection": "PCR",
+            "library_layout": "PAIRED",
+            "platform": "CAPILLARY",
+            "instrument_model": "AB 3500xL Genetic Analyzer"
+        },
+        {
+            "accession": "SRX11047067",
+            "alias": "Sebastes_macdonaldi-1",
+            "title": "AB 5500 Genetic Analyzer sequencing: Sebastes macdonaldi",
+            "study_accession": "PRJNA733285",
+            "sample_accession": "SAMN19373034",
+            "design_description": "",
+            "library_name": "Sebastes_macdonaldi-1",
+            "library_strategy": "AMPLICON",
+            "library_source": "GENOMIC",
+            "library_selection": "PCR",
+            "library_layout": "SINGLE",
+            "platform": "ABI_SOLID",
+            "instrument_model": "AB 5500 Genetic Analyzer"
+        },
+        {
+            "accession": "SRX17709227",
+            "alias": "GSM6601460_r1",
+            "title": "Illumina HiSeq 4000 sequencing: GSM6601460: sham-treated worms in day 5 Caenorhabditis elegans RNA-Seq",
+            "study_accession": "PRJNA884373",
+            "sample_accession": "SAMN31021823",
+            "design_description": "",
+            "library_name": "GSM6601460",
+            "library_strategy": "RNA-Seq",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "cDNA",
+            "library_layout": "SINGLE",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 4000"
+        },
+        {
+            "accession": "SRX17709228",
+            "alias": "GSM6601461_r1",
+            "title": "Illumina HiSeq 4000 sequencing: GSM6601461: PM2.5-treated worms in day 5 Caenorhabditis elegans RNA-Seq",
+            "study_accession": "PRJNA884373",
+            "sample_accession": "SAMN31021822",
+            "design_description": "",
+            "library_name": "GSM6601461",
+            "library_strategy": "RNA-Seq",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "cDNA",
+            "library_layout": "SINGLE",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 4000"
+        },
+        {
+            "accession": "SRX6725035",
+            "alias": "Emb289P1_bin131",
+            "title": "Illumina HiSeq 2500 sequencing: Binning of metagenomic reads from the P1 gut compartment of Embiratermes neotenicus",
+            "study_accession": "PRJNA560329",
+            "sample_accession": "SAMN12581720",
+            "design_description": "",
+            "library_name": "Emb289P1_bin131",
+            "library_strategy": "WGS",
+            "library_source": "METAGENOMIC",
+            "library_selection": "RANDOM",
+            "library_layout": "SINGLE",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 2500"
+        },
+        {
+            "accession": "SRX9315476",
+            "alias": "F11-N1-05",
+            "title": "Illumina HiSeq 3000 sequencing: Haplotype tagging reveals parallel formation of hybrid races in two butterfly species",
+            "study_accession": "PRJNA670070",
+            "sample_accession": "SAMN16455283",
+            "design_description": "",
+            "library_name": "F11-N1-05",
+            "library_strategy": "Synthetic-Long-Read",
+            "library_source": "GENOMIC",
+            "library_selection": "RANDOM PCR",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 3000"
+        },
+        {
+            "accession": "SRX9504942",
+            "alias": "GSM4907283",
+            "title": "NextSeq 550 sequencing: GSM4907283: A20-35 A11A20-35 A11_ROI009PanCK+ Homo sapiens OTHER",
+            "study_accession": "PRJNA678298",
+            "sample_accession": "SAMN16793052",
+            "design_description": "",
+            "library_name": "",
+            "library_strategy": "OTHER",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "other",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "NextSeq 550"
+        },
+        {
+            "accession": "SRX9504942",
+            "alias": "GSM4907283",
+            "title": "NextSeq 550 sequencing: GSM4907283: A20-35 A11A20-35 A11_ROI009PanCK+ Homo sapiens OTHER",
+            "study_accession": "PRJNA678298",
+            "sample_accession": "SAMN16793052",
+            "design_description": "",
+            "library_name": "",
+            "library_strategy": "OTHER",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "other",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "NextSeq 550"
+        },
+        {
+            "accession": "SRX9504942",
+            "alias": "GSM4907283",
+            "title": "NextSeq 550 sequencing: GSM4907283: A20-35 A11A20-35 A11_ROI009PanCK+ Homo sapiens OTHER",
+            "study_accession": "PRJNA678298",
+            "sample_accession": "SAMN16793052",
+            "design_description": "",
+            "library_name": "",
+            "library_strategy": "OTHER",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "other",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "NextSeq 550"
+        },
+        {
+            "accession": "SRX9504942",
+            "alias": "GSM4907283",
+            "title": "NextSeq 550 sequencing: GSM4907283: A20-35 A11A20-35 A11_ROI009PanCK+ Homo sapiens OTHER",
+            "study_accession": "PRJNA678298",
+            "sample_accession": "SAMN16793052",
+            "design_description": "",
+            "library_name": "",
+            "library_strategy": "OTHER",
+            "library_source": "TRANSCRIPTOMIC",
+            "library_selection": "other",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "NextSeq 550"
+        },
+        {
+            "accession": "SRX9626017",
+            "alias": "S.170804.00784",
+            "title": "Illumina HiSeq 2500 sequencing: Stool Microbiome Features to Discriminate Clostridium Difficile Colonization and Infection",
+            "study_accession": "PRJNA682076",
+            "sample_accession": "SAMN16980141",
+            "design_description": "",
+            "library_name": "S.170804.00784",
+            "library_strategy": "AMPLICON",
+            "library_source": "METAGENOMIC",
+            "library_selection": "PCR",
+            "library_layout": "PAIRED",
+            "platform": "ILLUMINA",
+            "instrument_model": "Illumina HiSeq 2500"
+        }
+    ],
+    "run": [
+        {
+            "accession": "DRR026872",
+            "alias": "DRR026872",
+            "experiment_accession": "DRX024467",
+            "file_1": "az://raw/results/fastq/DRX024467_DRR026872.fastq.gz",
+            "file_2": "",
+            "metadata": {
+                "base_count": "62550",
+                "read_count": "417",
+                "fastq_md5": "515e5448c55e054113c4a22df5f62791",
+                "fastq_bytes": "38447",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/DRR026/DRR026872/DRR026872.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/DRR026/DRR026872/DRR026872.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/DRR026/DRR026872/DRR026872.fastq.gz"
+            }
+        },
+        {
+            "accession": "DRR028935",
+            "alias": "DRR028935",
+            "experiment_accession": "DRX026011",
+            "file_1": "az://raw/results/fastq/DRX026011_DRR028935_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/DRX026011_DRR028935_2.fastq.gz",
+            "metadata": {
+                "base_count": "194930",
+                "read_count": "965",
+                "fastq_md5": "cc01df82a9354bb6b3be93483b20c35a;941c9998d746416dad53c94c480ddf30",
+                "fastq_bytes": "60275;61610",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/DRR028/DRR028935/DRR028935_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/DRR028/DRR028935/DRR028935_2.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/DRR028/DRR028935/DRR028935_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/DRR028/DRR028935/DRR028935_2.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/DRR028/DRR028935/DRR028935_1.fastq.gz;fasp.sra.ebi.ac.uk:/vol1/fastq/DRR028/DRR028935/DRR028935_2.fastq.gz"
+            }
+        },
+        {
+            "accession": "ERR1160846",
+            "alias": "qiita_ppdid_706:10317.BLANK.93.3E.r22",
+            "experiment_accession": "ERX1234253",
+            "file_1": "az://raw/results/fastq/ERX1234253_ERR1160846.fastq.gz",
+            "file_2": "",
+            "metadata": {
+                "base_count": "35658",
+                "read_count": "283",
+                "fastq_md5": "5924f20ef547ebdfed7cad795bbab6e6",
+                "fastq_bytes": "18077",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/ERR116/006/ERR1160846/ERR1160846.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/ERR116/006/ERR1160846/ERR1160846.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/ERR116/006/ERR1160846/ERR1160846.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR14593545",
+            "alias": "577-6_530058_19-037147 Goat_F.ab1",
+            "experiment_accession": "SRX10940790",
+            "file_1": "az://raw/results/fastq/SRX10940790_SRR14593545_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX10940790_SRR14593545_2.fastq.gz",
+            "metadata": {
+                "base_count": "828",
+                "read_count": "1",
+                "fastq_md5": "",
+                "fastq_bytes": "",
+                "fastq_ftp": "",
+                "fastq_galaxy": "",
+                "fastq_aspera": ""
+            }
+        },
+        {
+            "accession": "SRR14709033",
+            "alias": "Sebastes_levis-2.fastq",
+            "experiment_accession": "SRX11047067",
+            "file_1": "az://raw/results/fastq/SRX11047067_SRR14709033.fastq.gz",
+            "file_2": "",
+            "metadata": {
+                "base_count": "153",
+                "read_count": "1",
+                "fastq_md5": "",
+                "fastq_bytes": "",
+                "fastq_ftp": "",
+                "fastq_galaxy": "",
+                "fastq_aspera": ""
+            }
+        },
+        {
+            "accession": "SRR21711856",
+            "alias": "GSM6601460_r1",
+            "experiment_accession": "SRX17709227",
+            "file_1": "az://raw/results/fastq/SRX17709227_SRR21711856.fastq.gz",
+            "file_2": "",
+            "metadata": {
+                "base_count": "573417800",
+                "read_count": "11468356",
+                "fastq_md5": "7cd1402155befc87be338132d1f31f64",
+                "fastq_bytes": "447377777",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR217/056/SRR21711856/SRR21711856.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR217/056/SRR21711856/SRR21711856.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR217/056/SRR21711856/SRR21711856.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR21711855",
+            "alias": "GSM6601461_r1",
+            "experiment_accession": "SRX17709228",
+            "file_1": "az://raw/results/fastq/SRX17709228_SRR21711855.fastq.gz",
+            "file_2": "",
+            "metadata": {
+                "base_count": "677912850",
+                "read_count": "13558257",
+                "fastq_md5": "cbe4e9f967a71593f9ec3c6edaf11c83",
+                "fastq_bytes": "529798447",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR217/055/SRR21711855/SRR21711855.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR217/055/SRR21711855/SRR21711855.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR217/055/SRR21711855/SRR21711855.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR9984183",
+            "alias": "Emb289P1_bin131.fastq",
+            "experiment_accession": "SRX6725035",
+            "file_1": "az://raw/results/fastq/SRX6725035_SRR9984183.fastq.gz",
+            "file_2": "",
+            "metadata": {
+                "base_count": "1996273",
+                "read_count": "58",
+                "fastq_md5": "0b512d2dc31685983456bd56fd836544",
+                "fastq_bytes": "605358",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR998/003/SRR9984183/SRR9984183.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR998/003/SRR9984183/SRR9984183.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR998/003/SRR9984183/SRR9984183.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR12848126",
+            "alias": "Longshanks_F11-N1-05_haplo.pMarkdup.chr3_focal.bam",
+            "experiment_accession": "SRX9315476",
+            "file_1": "az://raw/results/fastq/SRX9315476_SRR12848126_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX9315476_SRR12848126_2.fastq.gz",
+            "metadata": {
+                "base_count": "431758",
+                "read_count": "2954",
+                "fastq_md5": "",
+                "fastq_bytes": "",
+                "fastq_ftp": "",
+                "fastq_galaxy": "",
+                "fastq_aspera": ""
+            }
+        },
+        {
+            "accession": "SRR13055517",
+            "alias": "GSM4907283_r1",
+            "experiment_accession": "SRX9504942",
+            "file_1": "az://raw/results/fastq/SRX9504942_SRR13055517_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX9504942_SRR13055517_2.fastq.gz",
+            "metadata": {
+                "base_count": "2246028",
+                "read_count": "29553",
+                "fastq_md5": "dcf4438c0b682242ee90c5f3a803fb40;18dbe96e7f58b63406d9058938df1962",
+                "fastq_bytes": "721167;723753",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/017/SRR13055517/SRR13055517_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/017/SRR13055517/SRR13055517_2.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/017/SRR13055517/SRR13055517_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/017/SRR13055517/SRR13055517_2.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/017/SRR13055517/SRR13055517_1.fastq.gz;fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/017/SRR13055517/SRR13055517_2.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR13055518",
+            "alias": "GSM4907283_r2",
+            "experiment_accession": "SRX9504942",
+            "file_1": "az://raw/results/fastq/SRX9504942_SRR13055518_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX9504942_SRR13055518_2.fastq.gz",
+            "metadata": {
+                "base_count": "2235236",
+                "read_count": "29411",
+                "fastq_md5": "5ec894d863fcefe394470a0925aefde4;aead170df9851773d5202b5760c76d76",
+                "fastq_bytes": "717693;723429",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/018/SRR13055518/SRR13055518_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/018/SRR13055518/SRR13055518_2.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/018/SRR13055518/SRR13055518_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/018/SRR13055518/SRR13055518_2.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/018/SRR13055518/SRR13055518_1.fastq.gz;fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/018/SRR13055518/SRR13055518_2.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR13055519",
+            "alias": "GSM4907283_r3",
+            "experiment_accession": "SRX9504942",
+            "file_1": "az://raw/results/fastq/SRX9504942_SRR13055519_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX9504942_SRR13055519_2.fastq.gz",
+            "metadata": {
+                "base_count": "2232728",
+                "read_count": "29378",
+                "fastq_md5": "5ad51460c6c4a850dd37a206e2c441c1;a977367bf41dacf4c21bc0c8201b8b88",
+                "fastq_bytes": "714907;721705",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/019/SRR13055519/SRR13055519_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/019/SRR13055519/SRR13055519_2.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/019/SRR13055519/SRR13055519_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/019/SRR13055519/SRR13055519_2.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/019/SRR13055519/SRR13055519_1.fastq.gz;fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/019/SRR13055519/SRR13055519_2.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR13055520",
+            "alias": "GSM4907283_r4",
+            "experiment_accession": "SRX9504942",
+            "file_1": "az://raw/results/fastq/SRX9504942_SRR13055520_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX9504942_SRR13055520_2.fastq.gz",
+            "metadata": {
+                "base_count": "2214488",
+                "read_count": "29138",
+                "fastq_md5": "795d460abff6009c7f5ff7c14b773fbe;c3f34379356b28d6dac7212abc1a0a04",
+                "fastq_bytes": "709867;716862",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/020/SRR13055520/SRR13055520_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/020/SRR13055520/SRR13055520_2.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/020/SRR13055520/SRR13055520_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR130/020/SRR13055520/SRR13055520_2.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/020/SRR13055520/SRR13055520_1.fastq.gz;fasp.sra.ebi.ac.uk:/vol1/fastq/SRR130/020/SRR13055520/SRR13055520_2.fastq.gz"
+            }
+        },
+        {
+            "accession": "SRR13191702",
+            "alias": "S.170804.00784_662_L001_R1_001.fastq.gz",
+            "experiment_accession": "SRX9626017",
+            "file_1": "az://raw/results/fastq/SRX9626017_SRR13191702_1.fastq.gz",
+            "file_2": "az://raw/results/fastq/SRX9626017_SRR13191702_2.fastq.gz",
+            "metadata": {
+                "base_count": "45682",
+                "read_count": "91",
+                "fastq_md5": "89c5be920021a035084d8aeb74f32df7;56271be38a80db78ef3bdfc5d9909b98",
+                "fastq_bytes": "15420;16324",
+                "fastq_ftp": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR131/002/SRR13191702/SRR13191702_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR131/002/SRR13191702/SRR13191702_2.fastq.gz",
+                "fastq_galaxy": "ftp.sra.ebi.ac.uk/vol1/fastq/SRR131/002/SRR13191702/SRR13191702_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR131/002/SRR13191702/SRR13191702_2.fastq.gz",
+                "fastq_aspera": "fasp.sra.ebi.ac.uk:/vol1/fastq/SRR131/002/SRR13191702/SRR13191702_1.fastq.gz;fasp.sra.ebi.ac.uk:/vol1/fastq/SRR131/002/SRR13191702/SRR13191702_2.fastq.gz"
+            }
+        }
+    ],
+    "sample": [
+        {
+            "accession": "SAMD00023098",
+            "alias": "SAMD00023098",
+            "title": "F2 plant dreived from a cross between Tokyo Kokei-standard and Africa #21",
+            "taxon_id": "35883",
+            "sample_description": "Keywords: GSC:MIxS MIGS:6.0",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Ipomoea nil"
+            }
+        },
+        {
+            "accession": "SAMD00024405",
+            "alias": "SAMD00024405",
+            "title": "Botryococcus braunii Showa at day 0 after inoculation into fresh culture medium",
+            "taxon_id": "1202541",
+            "sample_description": "Liquid culture",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Botryococcus braunii Showa"
+            }
+        },
+        {
+            "accession": "SAMEA3687214",
+            "alias": "qiita_sid_10317:10317.BLANK.93.3E.r22",
+            "title": "10317.BLANK.93.3E.r22",
+            "taxon_id": "256318",
+            "sample_description": "American Gut control",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "metagenome"
+            }
+        },
+        {
+            "accession": "SAMN19097423",
+            "alias": "prp_2765",
+            "title": "MIGS Eukaryotic sample from Capra hircus",
+            "taxon_id": "9925",
+            "sample_description": "Keywords: GSC:MIxS MIGS:5.0",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Capra hircus"
+            }
+        },
+        {
+            "accession": "SAMN19373034",
+            "alias": "S._macdonaldi-1",
+            "title": "Sebastes_macdonaldi-1",
+            "taxon_id": "394693",
+            "sample_description": "Sebastes_macdonaldi-1",
+            "cell_type": "",
+            "tissue_type": "fin clip or muscle",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Sebastes macdonaldi"
+            }
+        },
+        {
+            "accession": "SAMN31021823",
+            "alias": "GSM6601460",
+            "title": "sham-treated worms in day 5",
+            "taxon_id": "6239",
+            "sample_description": "sham-treated worms in day 5",
+            "cell_type": "",
+            "tissue_type": "whole organism",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Caenorhabditis elegans"
+            }
+        },
+        {
+            "accession": "SAMN31021822",
+            "alias": "GSM6601461",
+            "title": "PM2.5-treated worms in day 5",
+            "taxon_id": "6239",
+            "sample_description": "PM2.5-treated worms in day 5",
+            "cell_type": "",
+            "tissue_type": "whole organism",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Caenorhabditis elegans"
+            }
+        },
+        {
+            "accession": "SAMN12581720",
+            "alias": "Emb289P1_bin131",
+            "title": "MIMAG Metagenome-assembled Genome sample from Defluviitaleaceae bacterium",
+            "taxon_id": "2660712",
+            "sample_description": "Keywords: GSC:MIxS MIMAG:5.0",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Defluviitaleaceae bacterium"
+            }
+        },
+        {
+            "accession": "SAMN16455283",
+            "alias": "F11-N1-05",
+            "title": "Longshanks_F11-N1-05",
+            "taxon_id": "10092",
+            "sample_description": "F11-N1-05",
+            "cell_type": "",
+            "tissue_type": "ear clips",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Mus musculus domesticus"
+            }
+        },
+        {
+            "accession": "SAMN16793052",
+            "alias": "GSM4907283",
+            "title": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "taxon_id": "9606",
+            "sample_description": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Homo sapiens"
+            }
+        },
+        {
+            "accession": "SAMN16793052",
+            "alias": "GSM4907283",
+            "title": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "taxon_id": "9606",
+            "sample_description": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Homo sapiens"
+            }
+        },
+        {
+            "accession": "SAMN16793052",
+            "alias": "GSM4907283",
+            "title": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "taxon_id": "9606",
+            "sample_description": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Homo sapiens"
+            }
+        },
+        {
+            "accession": "SAMN16793052",
+            "alias": "GSM4907283",
+            "title": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "taxon_id": "9606",
+            "sample_description": "A20-35 A11A20-35 A11_ROI009PanCK+",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "Homo sapiens"
+            }
+        },
+        {
+            "accession": "SAMN16980141",
+            "alias": "S.170804.00784_662",
+            "title": "Metagenome or environmental sample from human gut metagenome",
+            "taxon_id": "408170",
+            "sample_description": "Metagenome or environmental sample from human gut metagenome",
+            "cell_type": "",
+            "tissue_type": "",
+            "collected_by": "",
+            "collection_date": "",
+            "sex": "",
+            "cell_line": "",
+            "metadata": {
+                "scientific_name": "human gut metagenome"
+            }
+        }
+    ]
+}

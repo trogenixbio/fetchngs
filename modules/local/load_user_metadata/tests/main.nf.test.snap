@@ -1,0 +1,118 @@
+{
+    "Load in xlsx": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,790458b5403899c19ae7e2eca21b768f"
+                ],
+                "1": [
+                    "samplesheet.json:md5,318f81d812c62cfd1d55540c947cb859"
+                ],
+                "2": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ],
+                "metadata_json": [
+                    "metadata.json:md5,790458b5403899c19ae7e2eca21b768f"
+                ],
+                "samplesheet_json": [
+                    "samplesheet.json:md5,318f81d812c62cfd1d55540c947cb859"
+                ],
+                "versions": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T14:31:30.855389902"
+    },
+    "Load in xlsx meta": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,83bc8e512bcb830373b7ad9a3785819e"
+                ],
+                "1": [
+                    "samplesheet.json:md5,5579da7c392df5f9065397e30f947637"
+                ],
+                "2": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ],
+                "metadata_json": [
+                    "metadata.json:md5,83bc8e512bcb830373b7ad9a3785819e"
+                ],
+                "samplesheet_json": [
+                    "samplesheet.json:md5,5579da7c392df5f9065397e30f947637"
+                ],
+                "versions": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T14:31:41.372480731"
+    },
+    "Load in TSV set no metadata": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,e994383e61e5022035972e2fc09c18e8"
+                ],
+                "1": [
+                    "samplesheet.json:md5,46235f82032f55a8090c15daec8fc241"
+                ],
+                "2": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ],
+                "metadata_json": [
+                    "metadata.json:md5,e994383e61e5022035972e2fc09c18e8"
+                ],
+                "samplesheet_json": [
+                    "samplesheet.json:md5,46235f82032f55a8090c15daec8fc241"
+                ],
+                "versions": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T14:32:01.953131745"
+    },
+    "Load in TSV set": {
+        "content": [
+            {
+                "0": [
+                    "metadata.json:md5,37518e0bf410ce835c6b3dc0b63044ef"
+                ],
+                "1": [
+                    "samplesheet.json:md5,74771b12d04ebfb33833d04935e59062"
+                ],
+                "2": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ],
+                "metadata_json": [
+                    "metadata.json:md5,37518e0bf410ce835c6b3dc0b63044ef"
+                ],
+                "samplesheet_json": [
+                    "samplesheet.json:md5,74771b12d04ebfb33833d04935e59062"
+                ],
+                "versions": [
+                    "versions.yml:md5,1d8c00682c5462d5a1953c267377a52c"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-04-04T14:31:51.444787533"
+    }
+}

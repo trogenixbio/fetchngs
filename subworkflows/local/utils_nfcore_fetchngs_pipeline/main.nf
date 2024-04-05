@@ -37,6 +37,7 @@ workflow PIPELINE_INITIALISATION {
     outdir              //  string: The output directory where the results will be saved
     input               //  string: File containing SRA/ENA/GEO/DDBJ identifiers one per line to download their associated metadata and FastQ files
     ena_metadata_fields //  string: Comma-separated list of ENA metadata fields to fetch before downloading data
+    metadata_sheet
 
     main:
 
@@ -75,20 +76,24 @@ workflow PIPELINE_INITIALISATION {
     //
     // Auto-detect input id type
     //
-    ch_input = file(input)
-    if (isSraId(ch_input)) {
-        sraCheckENAMetadataFields(ena_metadata_fields)
-    } else {
-        error('Ids provided via --input not recognised please make sure they are either SRA / ENA / GEO / DDBJ ids!')
-    }
 
-    // Read in ids from --input file
-    Channel
-        .from(ch_input)
-        .splitCsv(header:false, sep:'', strip:true)
-        .map { it[0] }
-        .unique()
-        .set { ch_ids }
+    if (!metadata_sheet) {
+        ch_input = file(input)
+        if (isSraId(ch_input)) {
+            sraCheckENAMetadataFields(ena_metadata_fields)
+        } else {
+            error('Ids provided via --input not recognised please make sure they are either SRA / ENA / GEO / DDBJ ids!')
+        }
+        // Read in ids from --input file
+        Channel
+            .from(ch_input)
+            .splitCsv(header:false, sep:'', strip:true)
+            .map { it[0] }
+            .unique()
+            .set { ch_ids }
+    } else {
+        ch_ids = file(input)
+    }
 
     emit:
     ids = ch_ids
@@ -181,11 +186,12 @@ def sraCheckENAMetadataFields(ena_metadata_fields) {
 //
 def sraCurateSamplesheetWarn() {
     log.warn "=============================================================================\n" +
-        "  Please double-check the samplesheet that has been auto-created by the pipeline.\n\n" +
+        "  Please double-check the samplesheet and metadata that has been auto-created\n" +
+        "  by the pipeline before any system wide metadata update is run.\n\n" +
         "  Public databases don't reliably hold information such as strandedness\n" +
         "  information, controls etc\n\n" +
         "  All of the sample metadata obtained from the ENA has been appended\n" +
-        "  as additional columns to help you manually curate the samplesheet before\n" +
+        "  as additional columns to help you manually curate the samplesheet/metadata before\n" +
         "  running nf-core/other pipelines.\n" +
         "==================================================================================="
 }

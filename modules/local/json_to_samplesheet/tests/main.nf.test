@@ -1,0 +1,86 @@
+nextflow_process {
+
+    name "Test Process JSON_TO_SAMPLESHEET"
+    script "../main.nf"
+    process "JSON_TO_SAMPLESHEET"
+
+    test("Should run without failures - empty") {
+
+        when {
+            process {
+                """
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
+                input[1] = ""
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should run without failures - rnaseq") {
+
+        when {
+            process {
+                """
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
+                input[1] = "rnaseq"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should run without failures - atacseq") {
+
+        when {
+            process {
+                """
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
+                input[1] = "atacseq"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should run without failures - taxprofiler") {
+
+        when {
+            process {
+                """
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
+                input[1] = "taxprofiler"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+}

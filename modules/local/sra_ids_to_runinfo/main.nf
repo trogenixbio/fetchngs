@@ -13,8 +13,9 @@ process SRA_IDS_TO_RUNINFO {
     val fields
 
     output:
-    path "*.tsv"       , emit: tsv
-    path "versions.yml", emit: versions
+    path "*.tsv"          , emit: tsv
+    path "*.runinfo.json" , emit: json
+    path "versions.yml"   , emit: versions
 
     script:
     def metadata_fields = fields ? "--ena_metadata_fields ${fields}" : ''
@@ -23,6 +24,7 @@ process SRA_IDS_TO_RUNINFO {
     sra_ids_to_runinfo.py \\
         id.txt \\
         ${id}.runinfo.tsv \\
+        ${id}.runinfo.json \\
         $metadata_fields
 
     cat <<-END_VERSIONS > versions.yml

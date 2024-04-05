@@ -9,7 +9,7 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = file(params.pipelines_testdata_base_path + 'tsv/SRR13191702.runinfo.tsv', checkIfExists: true)
+                input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + 'GSE214215.runinfo.json', checkIfExists: true)
                 """
             }
         }
