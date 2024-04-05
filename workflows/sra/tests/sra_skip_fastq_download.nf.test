@@ -21,6 +21,7 @@ nextflow_workflow {
             }
             params {
                 skip_fastq_download = true
+                outdir = "results"
             }
         }
 
@@ -34,6 +35,7 @@ nextflow_workflow {
                         assert path(get(0)).readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"']
                         assert path(get(0)).readLines()*.split(',').collect { it[0] }.sort() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"'].sort()
                         assert path(get(0)).text.contains('Illumina HiSeq 2500')
+                        assert path(get(0)).md5 == "3793e7430ad0e56280595ecf2f5f5a4f"
                     }
                 },
                 {

@@ -26,7 +26,8 @@
                     "type": "string",
                     "fa_icon": "fas fa-columns",
                     "description": "Comma-separated list of ENA metadata fields to fetch before downloading data.",
-                    "help_text": "The default list of fields used by the pipeline can be found at the top of the [`bin/sra_ids_to_runinfo.py`](https://github.com/nf-core/fetchngs/blob/master/bin/sra_ids_to_runinfo.py) script within the pipeline repo. This pipeline requires a minimal set of fields to download FastQ files i.e. `'run_accession,experiment_accession,library_layout,fastq_ftp,fastq_md5'`. Full list of accepted metadata fields can be obtained from the [ENA API](https://www.ebi.ac.uk/ena/portal/api/returnFields?dataPortal=ena&format=tsv&result=read_run)."
+                    "help_text": "The default list of fields used by the pipeline can be found at the top of the [`bin/sra_ids_to_runinfo.py`](https://github.com/nf-core/fetchngs/blob/master/bin/sra_ids_to_runinfo.py) script within the pipeline repo. This pipeline requires a minimal set of fields to download FastQ files i.e. `'run_accession,experiment_accession,library_layout,fastq_ftp,fastq_md5'`. Full list of accepted metadata fields can be obtained from the [ENA API](https://www.ebi.ac.uk/ena/portal/api/returnFields?dataPortal=ena&format=tsv&result=read_run).",
+                    "hidden": true
                 },
                 "sample_mapping_fields": {
                     "type": "string",
@@ -69,8 +70,10 @@
                 },
                 "cloud_prefix": {
                     "type": "string",
-                    "help_text": "Cloud prefix required for Nextflow to pull data (e.g. az://, s3://)",
-                    "description": "Cloud prefix."
+                    "help_text": "Cloud prefix required for Nextflow to pull data (e.g. az://, s3://) - in standard cloud setting this information will instead be pulled from outdir",
+                    "description": "Cloud prefix.",
+                    "hidden": true,
+                    "default": null
                 },
                 "metadata_schema": {
                     "type": "string",
@@ -105,6 +108,11 @@
                     "type": "string",
                     "help_text": "Workflow timestamp used to distinguish between runs.",
                     "description": "Workflow timestamp."
+                },
+                "pub_internal": {
+                    "type": "string",
+                    "help_text": "Defines final location of data - public or internal buckets.",
+                    "description": "Public/internal output dir."
                 },
                 "outdir": {
                     "type": "string",

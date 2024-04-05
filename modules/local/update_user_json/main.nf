@@ -10,6 +10,7 @@ process UPDATE_USER_JSON {
     path metadata_json
     path samplesheet_json
     val cloud_prefix
+    val pub_internal
 
     output:
     path "metadata_update.json"    , emit: metadata_json_update
@@ -19,7 +20,7 @@ process UPDATE_USER_JSON {
     script:
     def args = task.ext.args ?: ''
     """
-    update_user_json.py $metadata_json $samplesheet_json metadata_update.json samplesheet_update.json $cloud_prefix
+    update_user_json.py $metadata_json $samplesheet_json metadata_update.json samplesheet_update.json $cloud_prefix $pub_internal
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

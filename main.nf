@@ -52,7 +52,7 @@ workflow NFCORE_FETCHNGS {
 
 workflow {
 
-    def pub_internal = params.metadata_sheet ? "internal": "public"
+    //def pub_internal = params.metadata_sheet ? "internal": "public"
 
     //
     // SUBWORKFLOW: Run initialisation tasks
@@ -63,7 +63,7 @@ workflow {
         params.validate_params,
         params.monochrome_logs,
         args,
-        "${params.outdir}/${pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
+        "${params.outdir}/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
         params.input,
         params.ena_metadata_fields,
         params.metadata_sheet
@@ -83,7 +83,7 @@ workflow {
         params.email,
         params.email_on_fail,
         params.plaintext_email,
-        "${params.outdir}/${pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
+        "${params.outdir}/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}",
         params.monochrome_logs,
         params.hook_url
     )

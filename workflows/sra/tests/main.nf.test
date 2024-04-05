@@ -20,6 +20,9 @@ nextflow_workflow {
                 input[0] = Channel.from("DRX026011", "ERX1234253", "SRX6725035")
                 """
             }
+            params {
+                outdir = "results"
+            }
         }
 
         then {
@@ -30,7 +33,7 @@ nextflow_workflow {
                     with(workflow.out.samplesheet) {
                         assert path(get(0)).readLines().size() == 4
                         assert path(get(0)).readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"']
-                        assert path(get(0)).readLines()*.split(',').collect { it[0] } == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"']
+                        assert path(get(0)).readLines()*.split(',').collect { it[0] }.sort() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"'].sort()
                         assert path(get(0)).text.contains('Illumina HiSeq 2500')
                     }
                 },
@@ -39,6 +42,11 @@ nextflow_workflow {
                         assert path(get(0)).readLines().size() == 4
                         assert path(get(0)).readLines()*.split(',').collect { it[0] } == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"']
                         assert path(get(0)).text.contains('Illumina HiSeq 2500')
+                    }
+                },
+                {
+                    with(workflow.out.samplesheet) {
+                        assert path(get(0)).md5 == "d6e677fad224f6cefcf6f0fb179543b5"
                     }
                 },
                 {

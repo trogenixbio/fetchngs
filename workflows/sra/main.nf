@@ -44,6 +44,10 @@ workflow SRA {
     main:
     ch_versions = Channel.empty()
 
+    // Define output internal or external
+    output_location_run = "${params.outdir}/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}"
+    output_location_fq = params.cloud_prefix ? "${params.cloud_prefix}/${params.pub_internal}": "${params.outdir}/${params.pub_internal}"
+
     // Check if user supplied metadata sheet
     // If not assume SRA IDs supplied
     if (!params.metadata_sheet) {
@@ -141,8 +145,8 @@ workflow SRA {
                         def reads = fastq instanceof List ? fastq.flatten() : [ fastq ]
                         def meta_clone = meta.clone()
 
-                        meta_clone.fastq_1 = reads[0] ? "${params.cloud_prefix}public/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[0].getName()}" : ''
-                        meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${params.cloud_prefix}public/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[1].getName()}" : ''
+                        meta_clone.fastq_1 = reads[0] ? "${output_location_fq}/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[0].getName()}" : ''
+                        meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${output_location_fq}/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[1].getName()}" : ''
 
                         return meta_clone
                 }
@@ -241,7 +245,7 @@ workflow SRA {
             .map {
                 it.replace("},\n]", "}\n]")
             }
-            .collectFile( name:'samplesheet.json', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet")
+            .collectFile( name:'samplesheet.json', storeDir: "${output_location_run}/metadata/samplesheet")
             .set { ch_samplesheet_json }
 
         //
@@ -294,7 +298,7 @@ workflow SRA {
             .map { it[1] }
             .collectFile(name:'tmp_id_mappings.csv', newLine: true, keepHeader: true, sort: { it.baseName })
             .map { it.text.tokenize('\n').join('\n') }
-            .collectFile(name:'id_mappings.csv', storeDir: "${params.outdir}/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet")
+            .collectFile(name:'id_mappings.csv', storeDir: "${output_location_run}/metadata/samplesheet")
             .set { ch_mappings }
 
         //
@@ -336,6 +340,12 @@ workflow SRA {
             params.metadata_schema
         )
         ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_1.out.versions)
+
+        // Collect samplesheet json
+        LOAD_USER_METADATA
+            .out
+            .samplesheet_json
+            .set { ch_samplesheet_json }
 
         // define meta data for output
         LOAD_USER_METADATA
@@ -410,35 +420,41 @@ workflow SRA {
                 )
                 ch_versions = ch_versions.mix(DOWNLOAD_USER_DATA.out.versions.first())
             }
+
+            //
+            // MODULE: Update metadata so files match with new location
+            //
+            UPDATE_USER_JSON (
+                LOAD_USER_METADATA.out.metadata_json,
+                LOAD_USER_METADATA.out.samplesheet_json,
+                params.cloud_prefix ?: params.outdir,
+                params.pub_internal
+            )
+            ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions)
+
+            // make updated samplesheet json current ch
+            UPDATE_USER_JSON
+                .out
+                .samplesheet_json_update
+                .set { ch_samplesheet_json }
+
+            //
+            // MODULE: Check Metadata
+            //
+
+            CHECK_METADATA_INTERNAL_2 (
+                UPDATE_USER_JSON.out.metadata_json_update, // This will not be available to user supplied.
+                params.metadata_schema
+            )
+            ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_2.out.versions)
         }
-
-        //
-        // MODULE: Update metadata so files match with new location
-        //
-
-        UPDATE_USER_JSON (
-            LOAD_USER_METADATA.out.metadata_json,
-            LOAD_USER_METADATA.out.samplesheet_json,
-            params.cloud_prefix ?: params.outdir
-        )
-        ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions)
-
-        //
-        // MODULE: Check Metadata
-        //
-
-        CHECK_METADATA_INTERNAL_2 (
-            UPDATE_USER_JSON.out.metadata_json_update, // This will not be available to user supplied.
-            params.metadata_schema
-        )
-        ch_versions = ch_versions.mix(CHECK_METADATA_INTERNAL_2.out.versions)
 
         //
         // MODULE: Convert JSON to samplesheet ready for pipeline runs
         //
 
         JSON_TO_SAMPLESHEET_INTERNAL (
-            UPDATE_USER_JSON.out.samplesheet_json_update,
+            ch_samplesheet_json,
             params.nf_core_pipeline ?: ''
         )
         ch_versions = ch_versions.mix(JSON_TO_SAMPLESHEET_INTERNAL.out.versions)
@@ -457,10 +473,8 @@ workflow SRA {
     //
     // Collate and save software versions
     //
-    def pub_internal = params.metadata_sheet ? "internal": "public"
-
     softwareVersionsToYAML(ch_versions)
-        .collectFile(storeDir: "${params.outdir}/${pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
+        .collectFile(storeDir: "${output_location_run}/pipeline_info", name: 'nf_core_fetchngs_software_mqc_versions.yml', sort: true, newLine: true)
 
     emit:
     samplesheet     = ch_samplesheet

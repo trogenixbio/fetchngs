@@ -11,7 +11,8 @@ nextflow_process {
                 """
                 input[0] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "metadata.json", checkIfExists: true)
                 input[1] = file("$baseDir" + "/" + params.modules_testdata_base_path_local + "samplesheet.json", checkIfExists: true)
-                input[2] = "az://raw/"
+                input[2] = "az://raw"
+                input[3] = "public"
                 """
             }
         }

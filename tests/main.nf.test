@@ -13,6 +13,7 @@ nextflow_pipeline {
                 input              = 'https://raw.githubusercontent.com/nf-core/test-datasets/2732b911c57e607fa7aea5ba0c3d91b25bafb662/testdata/v1.12.0/sra_ids_test.csv'
                 pipeline_version   = "trgx-fetchngs-dev"
                 wf_timestamp       = "${params.trace_timestamp}"
+                pub_internal       = "external"
             }
         }
 
@@ -20,25 +21,25 @@ nextflow_pipeline {
             assert workflow.success
 
             assertAll(
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines().size() == 15 },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"'] },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',').collect { it[0] } == ['"sample"', '"DRX024467"', '"DRX026011"', '"ERX1234253"', '"SRX10940790"', '"SRX11047067"', '"SRX17709227"', '"SRX17709228"', '"SRX6725035"', '"SRX9315476"', '"SRX9504942"', '"SRX9504942"', '"SRX9504942"', '"SRX9504942"', '"SRX9626017"'] },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").text.contains('Illumina HiSeq 2500') },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/custom_sratoolsncbisettings/user-settings.mkfg").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR026872.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR028935.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/ERR1160846.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSE214215.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSM4907283.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR12848126.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR13191702.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14593545.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14709033.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR9984183.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/nf_core_fetchngs_software_mqc_versions.yml").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/id_mappings.csv").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/multiqc/multiqc_config.yml").exists() },
-                { assert new File("$outputDir/public/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").exists() }
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines().size() == 15 },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"'] },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',').collect { it[0] } == ['"sample"', '"DRX024467"', '"DRX026011"', '"ERX1234253"', '"SRX10940790"', '"SRX11047067"', '"SRX17709227"', '"SRX17709228"', '"SRX6725035"', '"SRX9315476"', '"SRX9504942"', '"SRX9504942"', '"SRX9504942"', '"SRX9504942"', '"SRX9626017"'] },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").text.contains('Illumina HiSeq 2500') },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/custom_sratoolsncbisettings/user-settings.mkfg").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR026872.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR028935.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/ERR1160846.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSE214215.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSM4907283.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR12848126.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR13191702.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14593545.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14709033.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR9984183.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/nf_core_fetchngs_software_mqc_versions.yml").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/id_mappings.csv").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/multiqc/multiqc_config.yml").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").exists() }
             )
         }
     }
@@ -54,6 +55,7 @@ nextflow_pipeline {
                 is_excel           = true
                 pipeline_version   = "trgx-fetchngs-dev"
                 wf_timestamp       = "${trace_timestamp}"
+                pub_internal       = "internal"
             }
         }
 
@@ -61,24 +63,24 @@ nextflow_pipeline {
             assert workflow.success
 
             assertAll(
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines().size() == 12 },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"'] },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',').collect { it[0] }.sort().unique() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"', '"DRX024467"', '"SRX17709227"', '"SRX17709228"', '"SRX9504942"', '"SRX9626017"'].sort() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").text.contains('Illumina HiSeq 2500') },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/custom_sratoolsncbisettings/user-settings.mkfg").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR026872.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR028935.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/ERR1160846.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSE214215.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSM4907283.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR12848126.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR13191702.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14593545.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14709033.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR9984183.runinfo_ftp.json").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/nf_core_fetchngs_software_mqc_versions.yml").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/multiqc/multiqc_config.yml").exists() },
-                { assert new File("$outputDir/internal/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").exists() }
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines().size() == 12 },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',')[0].take(4) == ['"sample"', '"fastq_1"', '"fastq_2"', '"run_accession"'] },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").readLines()*.split(',').collect { it[0] }.sort().unique() == ['"sample"', '"DRX026011"', '"ERX1234253"', '"SRX6725035"', '"DRX024467"', '"SRX17709227"', '"SRX17709228"', '"SRX9504942"', '"SRX9626017"'].sort() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").text.contains('Illumina HiSeq 2500') },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/custom_sratoolsncbisettings/user-settings.mkfg").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR026872.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/DRR028935.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/ERR1160846.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSE214215.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/GSM4907283.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR12848126.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR13191702.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14593545.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR14709033.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/json/SRR9984183.runinfo_ftp.json").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/pipeline_info/nf_core_fetchngs_software_mqc_versions.yml").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/multiqc/multiqc_config.yml").exists() },
+                { assert new File("$outputDir/${params.pub_internal}/run_info/${params.pipeline_version}-${params.wf_timestamp}/metadata/samplesheet/samplesheet.csv").exists() }
             )
         }
     }
