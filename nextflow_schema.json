@@ -111,6 +111,41 @@
                     "help_text": "Defines final location of data - public or internal buckets.",
                     "description": "Public/internal output dir."
                 },
+                "skip_fastqc": {
+                    "type": "boolean",
+                    "help_text": "Defines option to run fastqc on raw data.",
+                    "description": "Skip fastqc."
+                },
+                "skip_multiqc": {
+                    "type": "boolean",
+                    "help_text": "Defines option to run multiqc summary.",
+                    "description": "Skip multiqc."
+                },
+                "multiqc_title": {
+                    "type": "string",
+                    "help_text": "Defines multiqc title.",
+                    "description": "Multiqc title."
+                },
+                "multiqc_logo": {
+                    "type": "string",
+                    "help_text": "Defines final location of multiqc logo.",
+                    "description": "Multiqc logo."
+                },
+                "max_multiqc_email_size": {
+                    "type": "string",
+                    "help_text": "Maximum multiqc email size.",
+                    "description": "Maximum multiqc email size."
+                },
+                "multiqc_methods_description": {
+                    "type": "string",
+                    "help_text": "Defines custom multiqc methods description.",
+                    "description": "Multiqc methods description."
+                },
+                "multiqc_yml": {
+                    "type": "string",
+                    "help_text": "Defines mqc yaml.",
+                    "description": "Multiqc yaml."
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",

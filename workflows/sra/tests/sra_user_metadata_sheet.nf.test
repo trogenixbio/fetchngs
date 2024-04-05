@@ -27,6 +27,7 @@ nextflow_workflow {
                 metadata_sheet = true
                 download_method = ""
                 outdir = "results"
+                skip_multiqc = true
             }
         }
 

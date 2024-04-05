@@ -383,7 +383,7 @@ workflow SRA {
                     meta ->
                     // add path(s) of the fastq file(s) to the meta map
                     def fastq_meta = []
- 
+
                     meta["id"] = meta.sample + "_" + meta.run_accession
 
                     if(params.download_method == "ftp") {
@@ -476,14 +476,14 @@ workflow SRA {
         ch_sample_mappings_yml = Channel.empty()
         ch_mappings            = Channel.empty()
     }
-     
+
     //
     // Define meta fq channel for QC
     //
 
     ch_meta_fq = Channel.empty()
     if (!params.skip_fastq_download) {
-    
+
         if (!params.metadata_sheet) {
 
             if (params.download_method == "sratools") {
@@ -506,7 +506,6 @@ workflow SRA {
         //
         // MODULE: FastQC - quick run prior to further processing
         //
-        ch_versions = Channel.empty()
         fastqc_html = Channel.empty()
         fastqc_zip  = Channel.empty()
         if (!params.skip_fastqc) {
@@ -530,10 +529,10 @@ workflow SRA {
     //
     ch_multiqc_report = Channel.empty()
     if (!params.skip_multiqc) {
-        ch_multiqc_config        = Channel.fromPath("$projectDir/workflows/assets/multiqc/fetchngs_multiqc_config.yml", checkIfExists: true)
+        ch_multiqc_config        = Channel.fromPath(params.multiqc_yml, checkIfExists: true)
         ch_multiqc_custom_config = ch_sample_mappings_yml
         ch_multiqc_logo          = params.multiqc_logo   ? Channel.fromPath(params.multiqc_logo)   : Channel.empty()
-        summary_params           = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+        summary_params           = paramsSummaryMap(workflow, parameters_schema: "${projectDir}/nextflow_schema.json")
         ch_workflow_summary      = Channel.value(paramsSummaryMultiqc(summary_params))
         ch_multiqc_files         = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
         ch_multiqc_files         = ch_multiqc_files.mix(ch_collated_versions)

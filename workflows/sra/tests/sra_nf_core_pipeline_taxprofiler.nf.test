@@ -23,6 +23,7 @@ nextflow_workflow {
             params {
                 nf_core_pipeline = "taxprofiler"
                 outdir = "results"
+                skip_multiqc = true
             }
         }
 
@@ -48,7 +49,7 @@ nextflow_workflow {
                 },
                 {
                     with(workflow.out.sample_mappings) {
-                        assert path(get(0)[0]).md5 == "1ac06bb95b503703430e74660bbdd768"
+                        assert path(get(0)).md5 == "1ac06bb95b503703430e74660bbdd768"
                     }
                 }
             )

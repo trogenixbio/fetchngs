@@ -27,6 +27,7 @@ nextflow_workflow {
                 metadata_sheet = true
                 download_method = ""
                 cloud_prefix = "az://raw"
+                skip_multiqc = true
             }
         }
 
@@ -59,6 +60,7 @@ nextflow_workflow {
                 skip_fastq_download = false
                 download_method = "ftp"
                 cloud_prefix = "az://raw"
+                skip_multiqc = true
             }
         }
 
@@ -84,7 +86,7 @@ nextflow_workflow {
                 },
                 {
                     with(workflow.out.sample_mappings) {
-                        assert path(get(0)[0]).md5 == "1ac06bb95b503703430e74660bbdd768"
+                        assert path(get(0)).md5 == "1ac06bb95b503703430e74660bbdd768"
                     }
                 }
             )
