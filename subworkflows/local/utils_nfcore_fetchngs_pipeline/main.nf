@@ -92,7 +92,7 @@ workflow PIPELINE_INITIALISATION {
             .unique()
             .set { ch_ids }
     } else {
-        ch_ids = file(metadata_sheet)
+        ch_ids = file(input)
     }
 
     emit:

@@ -22,8 +22,9 @@ nextflow_workflow {
                 """
             }
             params {
+                input = "${projectDir}/tests/local/metadata_template_ERC000011_TRX_Meta_other.xlsx"
                 skip_fastq_download = false
-                metadata_sheet = "${projectDir}/tests/local/metadata_template_ERC000011_TRX_Meta_other.xlsx"
+                metadata_sheet = true
                 download_method = ""
                 cloud_prefix = "az://raw"
             }

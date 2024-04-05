@@ -52,8 +52,6 @@ workflow NFCORE_FETCHNGS {
 
 workflow {
 
-    //def pub_internal = params.metadata_sheet ? "internal": "public"
-
     //
     // SUBWORKFLOW: Run initialisation tasks
     //

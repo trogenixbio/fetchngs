@@ -16,11 +16,9 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "schema": "assets/schema_input.json",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.(csv|tsv|txt)$",
+                    "pattern": "^\\S+\\.(csv|tsv|txt|xlsx)$",
                     "fa_icon": "fas fa-file-excel",
-                    "description": "File containing SRA/ENA/GEO/DDBJ identifiers one per line to download their associated metadata and FastQ files."
+                    "description": "File containing SRA/ENA/GEO/DDBJ identifiers one per line to download their associated metadata and FastQ files. Or path to user supplied metadata sheet (either set of tsvs, or xlsx)"
                 },
                 "ena_metadata_fields": {
                     "type": "string",
@@ -88,11 +86,10 @@
                     "description": "Metadata mapping json."
                 },
                 "metadata_sheet": {
-                    "type": "string",
+                    "type": "boolean",
                     "fa_icon": "fas fa-address-card",
-                    "help_text": "Path to user supplied metadata sheet (either set of tsvs, or xlsx).",
-                    "format": "file-path",
-                    "description": "User supplied metadata sheet."
+                    "help_text": "Boolean if path to user supplied metadata sheet (either set of tsvs, or xlsx) has been provided.",
+                    "description": "Has user supplied metadata sheet been provided as input?"
                 },
                 "is_excel": {
                     "type": "boolean",

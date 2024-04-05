@@ -37,7 +37,10 @@ def update_run_info_metadata(
 
 
 def update_run_info_samplesheet(
-    input_samplesheet_json_path, output_samplesheet_json_path, cloud_prefix, pub_internal
+    input_samplesheet_json_path,
+    output_samplesheet_json_path,
+    cloud_prefix,
+    pub_internal,
 ):
     # Load the JSON data
     with open(input_samplesheet_json_path, "r") as file:
@@ -83,11 +86,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     update_run_info_metadata(
-        args.input_metadata_json_path, args.output_metadata_json_path, args.cloud_prefix, args.pub_internal
+        args.input_metadata_json_path,
+        args.output_metadata_json_path,
+        args.cloud_prefix,
+        args.pub_internal,
     )
     update_run_info_samplesheet(
         args.input_samplesheet_json_path,
         args.output_samplesheet_json_path,
         args.cloud_prefix,
-        args.pub_internal
+        args.pub_internal,
     )
