@@ -50,7 +50,7 @@
                     "type": "string",
                     "default": "ftp",
                     "fa_icon": "fas fa-download",
-                    "enum": ["aspera", "ftp", "sratools"],
+                    "enum": ["aspera", "ftp", "sratools", "bs"],
                     "description": "Method to download FastQ files. Available options are 'aspera', 'ftp' or 'sratools'. Default is 'ftp'.",
                     "help_text": "FTP and Aspera CLI download FastQ files directly from the ENA FTP whereas sratools uses sra-tools to download *.sra files and convert to FastQ."
                 },
@@ -145,6 +145,26 @@
                     "type": "string",
                     "help_text": "Defines mqc yaml.",
                     "description": "Multiqc yaml."
+                },
+                "bs_api_server": {
+                    "type": "string",
+                    "help_text": "basespace api server.",
+                    "description": "basespace api server."
+                },
+                "bs_access_token": {
+                    "type": "string",
+                    "help_text": "basespace access token",
+                    "description": "basespace access token."
+                },
+                "suffix_1": {
+                    "type": "string",
+                    "help_text": "Suffix expected from basespace files pair 1.",
+                    "description": "Suffix expected from basespace files pair 1."
+                },
+                "suffix_2": {
+                    "type": "string",
+                    "help_text": "Suffix expected from basespace files pair 2.",
+                    "description": "Suffix expected from basespace files pair 2."
                 },
                 "outdir": {
                     "type": "string",

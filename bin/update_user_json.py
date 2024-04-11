@@ -17,14 +17,11 @@ def update_run_info_metadata(
     updated_run = []
     for run in data["run"]:
         experiment = experiments.get(run["experiment_accession"], {})
-        # "file_1": "az://raw/results/fastq/DRX026011_DRR028935_1.fastq.gz",
-        file_1 = run["file_1"].split("/")[-1]
-        file_2 = run["file_1"].split("/")[-1]
         run["file_1"] = (
-            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{file_1}"
+            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{run['experiment_accession']}_{run['accession']}.fastq.gz"
         )
         run["file_2"] = (
-            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{file_2}"
+            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{run['experiment_accession']}_{run['accession']}.fastq.gz"
         )
         updated_run.append(run)
 
@@ -51,12 +48,12 @@ def update_run_info_samplesheet(
         if "fastq_1" in item:
             fastq_1 = item["fastq_1"].split("/")[-1]
             item["fastq_1"] = (
-                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{item['library_strategy']}/fastq/{fastq_1}"
+                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{item['library_strategy']}/fastq/{item['experiment_accession']}_{item['run_accession']}.fastq.gz"
             )
         if "fastq_2" in item:
             fastq_2 = item["fastq_2"].split("/")[-1]
             item["fastq_2"] = (
-                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{item['library_strategy']}/fastq/{fastq_2}"
+                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{item['library_strategy']}/fastq/{item['experiment_accession']}_{item['run_accession']}.fastq.gz"
             )
 
     # Save the modified data to a new JSON file

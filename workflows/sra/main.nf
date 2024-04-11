@@ -23,6 +23,7 @@ include { JSON_TO_SAMPLESHEET as JSON_TO_SAMPLESHEET_INTERNAL } from '../../modu
 include { paramsSummaryMultiqc    } from '../../subworkflows/nf-core/utils_nfcore_pipeline'
 include { FASTQC                  } from '../../modules/nf-core/fastqc'
 include { MULTIQC                 } from '../../modules/nf-core/multiqc'
+include { BASESPACE_CLI           } from '../../modules/local/basespace_cli'
 include { paramsSummaryMap        } from 'plugin/nf-validation'
 
 
@@ -386,7 +387,7 @@ workflow SRA {
 
                     meta["id"] = meta.sample + "_" + meta.run_accession
 
-                    if(params.download_method == "ftp") {
+                    if(params.download_method == "ftp" | params.download_method == "bs") {
                         if (meta.fastq_2 == "") {
                             meta["single_end"] = true
                             fastq_meta = [ meta, [ meta.fastq_1 ] ]
@@ -420,7 +421,15 @@ workflow SRA {
                     ch_user_metadata
                 )
                 ch_versions = ch_versions.mix(SRA_FASTQ_FTP_INTERNAL.out.versions.first())
-            } else {
+            }
+            if (params.download_method == "bs") {
+
+                BASESPACE_CLI (
+                    ch_user_metadata
+                )
+                ch_versions = ch_versions.mix(BASESPACE_CLI.out.versions.first())
+            }
+            if (!(params.download_method == "ftp") & !(params.download_method == "bs")) {
                 // Stage in Fastq files
                 DOWNLOAD_USER_DATA (
                     ch_user_metadata
@@ -498,7 +507,11 @@ workflow SRA {
         } else {
             if (params.download_method == "ftp") {
                 SRA_FASTQ_FTP_INTERNAL.out.fastq.set { ch_meta_fq }
-            } else {
+            }
+            if (params.download_method == "bs") {
+                //BASESPACE_CLI.out.fastq.set { ch_meta_fq }
+            }
+            if (!params.download_method == "ftp" & !params.download_method == "bs") {
                 DOWNLOAD_USER_DATA.out.fastq.set { ch_meta_fq }
             }
         }
