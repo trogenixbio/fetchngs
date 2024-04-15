@@ -38,7 +38,7 @@ def read_excel_to_dict(filepath):
         if sheet_name.startswith("cv_"):
             continue
 
-        df = xls.parse(sheet_name, skiprows=[1])
+        df = xls.parse(sheet_name, skiprows=[1], parse_dates=False)
 
         # Remove columns that are not needed
         df = df.loc[:, ~df.columns.str.startswith("Unnamed")]
@@ -46,6 +46,11 @@ def read_excel_to_dict(filepath):
         df.fillna("", inplace=True)
 
         df.drop_duplicates(inplace=True)
+
+        # Timestamp needs to be converted where excel enforced
+        for column in df.columns:
+            if df[column].dtype == 'datetime64[ns]':
+                df[column] = df[column].astype(str)
 
         data[sheet_name] = process_dataframe(df)
 
@@ -145,7 +150,7 @@ def main(
         )  # Expects a list with one Excel file path
     else:
         data = read_tsv_to_dict(filepaths)  # Expects a list of TSV file paths
-
+    print(data)
     with open(output_metadata_json_path, "w") as jsonfile:
         json.dump(data, jsonfile, indent=4)
 
