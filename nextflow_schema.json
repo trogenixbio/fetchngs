@@ -71,7 +71,7 @@
                     "help_text": "Cloud prefix required for Nextflow to pull data (e.g. az://, s3://) - in standard cloud setting this information will instead be pulled from outdir",
                     "description": "Cloud prefix.",
                     "hidden": true,
-                    "default": null
+                    "default": ""
                 },
                 "metadata_schema": {
                     "type": "string",
@@ -165,6 +165,11 @@
                     "type": "string",
                     "help_text": "Suffix expected from basespace files pair 2.",
                     "description": "Suffix expected from basespace files pair 2."
+                },
+                "basespace": {
+                    "type": "boolean",
+                    "help_text": "Is basespace input included?",
+                    "description": "Is basespace input included?"
                 },
                 "outdir": {
                     "type": "string",
