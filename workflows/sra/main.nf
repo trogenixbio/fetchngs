@@ -509,7 +509,7 @@ workflow SRA {
                 SRA_FASTQ_FTP_INTERNAL.out.fastq.set { ch_meta_fq }
             }
             if (params.download_method == "bs") {
-                //BASESPACE_CLI.out.fastq.set { ch_meta_fq }
+                BASESPACE_CLI.out.fastq.set { ch_meta_fq }
             }
             if (!params.download_method == "ftp" & !params.download_method == "bs") {
                 DOWNLOAD_USER_DATA.out.fastq.set { ch_meta_fq }
