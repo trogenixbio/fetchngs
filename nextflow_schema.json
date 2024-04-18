@@ -99,7 +99,8 @@
                 "pipeline_version": {
                     "type": "string",
                     "help_text": "Pipeline descriptor that will define run output prefix.",
-                    "description": "Pipeline descriptor."
+                    "description": "Pipeline descriptor.",
+                    "hidden": true
                 },
                 "wf_timestamp": {
                     "type": "string",

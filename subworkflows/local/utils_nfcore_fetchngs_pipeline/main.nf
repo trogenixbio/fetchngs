@@ -134,6 +134,9 @@ workflow PIPELINE_COMPLETION {
         }
 
         sraCurateSamplesheetWarn()
+
+        writeWorkflowSummary(summary_params, outdir)
+
     }
 }
 
@@ -142,6 +145,71 @@ workflow PIPELINE_COMPLETION {
     FUNCTIONS
 ========================================================================================
 */
+
+//
+// Output workflow summary as standard
+//
+def writeWorkflowSummary(summary_params, outdir) {
+
+    // Gather params from summary_params
+    def summary = [:]
+    for (group in summary_params.keySet()) {
+        summary << summary_params[group]
+    }
+
+    // Define pipeline id variables
+    def pipeline_version = summary["pipeline_version"]
+    def wf_timestamp = summary["wf_timestamp"]
+
+    // Define resume details
+    def sessionID = workflow.sessionId
+    def resumed = "FALSE"
+    if (workflow.resume) {
+        resumed = "RESUMED (SESSION ID ${sessionID})"
+    }
+
+    // Define completion statement
+    def completion = "FAILED"
+    if (workflow.success) {
+        completion = "SUCCESS"
+    }
+
+    // Define fields
+    def misc_fields = [
+        'Completion': completion,
+        'Exit status': workflow.exitStatus,
+        'Resumed': resumed,
+        'Session ID': sessionID,
+        'Run command': workflow.commandLine,
+        'Pipeline run ID': "${pipeline_version}-${wf_timestamp}",
+        'Pipeline timestamp': wf_timestamp,
+        'Pipeline run_info outdir': outdir,
+        'User': workflow.userName,
+        'Date started': workflow.start,
+        'Date completed': workflow.complete,
+        'Pipeline script file path': workflow.scriptFile,
+        'Pipeline script hash ID': workflow.scriptId,
+        'Nextflow version': workflow.nextflow.version,
+        'Nextflow build': workflow.nextflow.build,
+        'Nextflow compile timestamp': workflow.nextflow.timestamp
+    ]
+    if (workflow.manifest.homePage) misc_fields['Pipeline repository Git URL'] = workflow.manifest.homePage
+    if (workflow.manifest.version)   misc_fields['Pipeline Git branch/tag'] = workflow.manifest.version
+
+    // Combine summary and miscellaneous fields into one map
+    def workflowDetails = misc_fields
+
+    // Define the file path
+    def summaryFilePath = "${outdir}/workflow_summary_${pipeline_version}-${wf_timestamp}.txt"
+    File summaryFile = new File(summaryFilePath)
+
+    // Write details to the file
+    summaryFile.withWriter { writer ->
+        workflowDetails.each { key, value ->
+            writer.write("$key: $value\n")
+        }
+    }
+}
 
 //
 // Check if input ids are from the SRA
