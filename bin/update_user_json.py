@@ -5,7 +5,7 @@ import argparse
 
 
 def update_run_info_metadata(
-    input_metadata_json_path, output_metadata_json_path, cloud_prefix, pub_internal
+    input_metadata_json_path, output_metadata_json_path, cloud_prefix, pub_internal, run_info_id
 ):
     # Load input JSON data
     with open(input_metadata_json_path, "r") as infile:
@@ -18,10 +18,10 @@ def update_run_info_metadata(
     for run in data["run"]:
         experiment = experiments.get(run["experiment_accession"], {})
         run["file_1"] = (
-            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{run['experiment_accession']}_{run['accession']}.fastq.gz"
+            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{run_info_id}/{experiment['library_strategy']}/fastq/{run['experiment_accession']}_{run['accession']}.fastq.gz"
         )
         run["file_2"] = (
-            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{experiment['library_strategy']}/fastq/{run['experiment_accession']}_{run['accession']}.fastq.gz"
+            f"{cloud_prefix}/{pub_internal}/{experiment['study_accession']}/{run_info_id}/{experiment['library_strategy']}/fastq/{run['experiment_accession']}_{run['accession']}.fastq.gz"
         )
         updated_run.append(run)
 
@@ -38,6 +38,7 @@ def update_run_info_samplesheet(
     output_samplesheet_json_path,
     cloud_prefix,
     pub_internal,
+    run_info_id
 ):
     # Load the JSON data
     with open(input_samplesheet_json_path, "r") as file:
@@ -48,12 +49,12 @@ def update_run_info_samplesheet(
         if "fastq_1" in item:
             fastq_1 = item["fastq_1"].split("/")[-1]
             item["fastq_1"] = (
-                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{item['library_strategy']}/fastq/{item['experiment_accession']}_{item['run_accession']}.fastq.gz"
+                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{run_info_id}/{item['library_strategy']}/fastq/{item['experiment_accession']}_{item['run_accession']}.fastq.gz"
             )
         if "fastq_2" in item:
             fastq_2 = item["fastq_2"].split("/")[-1]
             item["fastq_2"] = (
-                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{item['library_strategy']}/fastq/{item['experiment_accession']}_{item['run_accession']}.fastq.gz"
+                f"{cloud_prefix}/{pub_internal}/{item['study_accession']}/{run_info_id}/{item['library_strategy']}/fastq/{item['experiment_accession']}_{item['run_accession']}.fastq.gz"
             )
 
     # Save the modified data to a new JSON file
@@ -79,6 +80,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("cloud_prefix", help="Path to the cloud prefix to update")
     parser.add_argument("pub_internal", help="Internal/public out dir")
+    parser.add_argument("run_info_id", help="Pipeline run identifier")
 
     args = parser.parse_args()
 
@@ -87,10 +89,12 @@ if __name__ == "__main__":
         args.output_metadata_json_path,
         args.cloud_prefix,
         args.pub_internal,
+        args.run_info_id
     )
     update_run_info_samplesheet(
         args.input_samplesheet_json_path,
         args.output_samplesheet_json_path,
         args.cloud_prefix,
         args.pub_internal,
+        args.run_info_id
     )

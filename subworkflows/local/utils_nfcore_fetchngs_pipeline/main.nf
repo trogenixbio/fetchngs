@@ -174,40 +174,36 @@ def writeWorkflowSummary(summary_params, outdir) {
         completion = "SUCCESS"
     }
 
-    // Define fields
-    def misc_fields = [
-        'Completion': completion,
-        'Exit status': workflow.exitStatus,
-        'Resumed': resumed,
-        'Session ID': sessionID,
-        'Run command': workflow.commandLine,
-        'Pipeline run ID': "${pipeline_version}-${wf_timestamp}",
-        'Pipeline timestamp': wf_timestamp,
-        'Pipeline run_info outdir': outdir,
-        'User': workflow.userName,
-        'Date started': workflow.start,
-        'Date completed': workflow.complete,
-        'Pipeline script file path': workflow.scriptFile,
-        'Pipeline script hash ID': workflow.scriptId,
-        'Nextflow version': workflow.nextflow.version,
-        'Nextflow build': workflow.nextflow.build,
-        'Nextflow compile timestamp': workflow.nextflow.timestamp
-    ]
-    if (workflow.manifest.homePage) misc_fields['Pipeline repository Git URL'] = workflow.manifest.homePage
-    if (workflow.manifest.version)   misc_fields['Pipeline Git branch/tag'] = workflow.manifest.version
+    def jsonOutput = """{
+    "completion": "${completion}",
+    "exit-status": "${workflow.exitStatus}",
+    "resume": "${resumed}",
+    "session-id": "${sessionID}",
+    "run-command": "${workflow.commandLine}",
+    "pipeline-run-id": "${pipeline_version}-${wf_timestamp}",
+    "pipeline-timestamp": "${wf_timestamp}",
+    "pipeline-runinfo-outdir": "${outdir}",
+    "user": "${workflow.userName}",
+    "date-started": "${workflow.start}",
+    "date-completed": "${workflow.complete}",
+    "pipeline-script-file-path": "${workflow.scriptFile}",
+    "pipeline-script-hash-id": "${workflow.scriptId}",
+    "pipeline-git-repo-url": "${workflow.manifest.homePage}",
+    "pipeline-git-branch-tag": "${workflow.manifest.version}",
+    "nextflow-version": "${workflow.nextflow.version}",
+    "nextflow-build": "${workflow.nextflow.build}",
+    "nextflow-compile-timestamp": "${workflow.nextflow.timestamp}"\n}"""
 
-    // Combine summary and miscellaneous fields into one map
-    def workflowDetails = misc_fields
+    def summaryFilePathjson = "${outdir}/workflow_summary_${pipeline_version}-${wf_timestamp}.json"
+    File summaryFilejson = new File(summaryFilePathjson)
 
-    // Define the file path
-    def summaryFilePath = "${outdir}/workflow_summary_${pipeline_version}-${wf_timestamp}.txt"
-    File summaryFile = new File(summaryFilePath)
-
-    // Write details to the file
-    summaryFile.withWriter { writer ->
-        workflowDetails.each { key, value ->
-            writer.write("$key: $value\n")
+    // Write the JSON string to the file
+    try {
+        summaryFilejson.withWriter('UTF-8') { writer ->
+            writer.write(jsonOutput)
         }
+    } catch (IOException e) {
+        println "Error writing to file: ${e.message}"
     }
 }
 

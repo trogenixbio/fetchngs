@@ -153,8 +153,8 @@ workflow SRA {
                         def reads = fastq instanceof List ? fastq.flatten() : [ fastq ]
                         def meta_clone = meta.clone()
 
-                        meta_clone.fastq_1 = reads[0] ? "${output_location_fq}/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[0].getName()}" : ''
-                        meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${output_location_fq}/${meta.study_accession}/${meta.library_strategy}/fastq/${reads[1].getName()}" : ''
+                        meta_clone.fastq_1 = reads[0] ? "${output_location_fq}/${meta.study_accession}/${params.pipeline_version}-${params.wf_timestamp}/${meta.library_strategy}/fastq/${reads[0].getName()}" : ''
+                        meta_clone.fastq_2 = reads[1] && !meta.single_end ? "${output_location_fq}/${meta.study_accession}/${params.pipeline_version}-${params.wf_timestamp}/${meta.library_strategy}/fastq/${reads[1].getName()}" : ''
 
                         return meta_clone
                 }
@@ -444,7 +444,8 @@ workflow SRA {
                 LOAD_USER_METADATA.out.metadata_json,
                 LOAD_USER_METADATA.out.samplesheet_json,
                 params.cloud_prefix ?: params.outdir,
-                params.pub_internal
+                params.pub_internal,
+                "${params.pipeline_version}-${params.wf_timestamp}"
             )
             ch_versions = ch_versions.mix(UPDATE_USER_JSON.out.versions)
 
