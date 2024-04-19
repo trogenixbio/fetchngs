@@ -62,7 +62,9 @@ def apply_field_mapping(item, schema, field_mapping, group_mapping):
 
 def convert_to_schema_format(input_data, schema, field_mapping, group_mapping):
     output = {key: [] for key in schema.keys()}
-    seen_entities = {key: set() for key in schema.keys()}  # Dictionary to track seen entities by unique identifier
+    seen_entities = {
+        key: set() for key in schema.keys()
+    }  # Dictionary to track seen entities by unique identifier
     for item in input_data:
         mapped_item = apply_field_mapping(item, schema, field_mapping, group_mapping)
 
@@ -85,12 +87,16 @@ def convert_to_schema_format(input_data, schema, field_mapping, group_mapping):
                     entity_obj["metadata"] = mapped_item[entity]["metadata"]
 
             # Create a unique identifier for each entity to check for duplicates
-            unique_identifier = entity_obj.get('accession', None)  # Assuming 'accession' can be a unique identifier
+            unique_identifier = entity_obj.get(
+                "accession", None
+            )  # Assuming 'accession' can be a unique identifier
 
             # Append the entity object if it has any fields defined and is not already seen
             if entity_obj and (unique_identifier not in seen_entities[entity]):
                 output[entity].append(entity_obj)
-                seen_entities[entity].add(unique_identifier)  # Track this entity as seen
+                seen_entities[entity].add(
+                    unique_identifier
+                )  # Track this entity as seen
 
     return output
 

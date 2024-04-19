@@ -49,7 +49,7 @@ def read_excel_to_dict(filepath):
 
         # Timestamp needs to be converted where excel enforced
         for column in df.columns:
-            if df[column].dtype == 'datetime64[ns]':
+            if df[column].dtype == "datetime64[ns]":
                 df[column] = df[column].astype(str)
 
         data[sheet_name] = process_dataframe(df)

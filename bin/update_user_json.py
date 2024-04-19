@@ -5,7 +5,11 @@ import argparse
 
 
 def update_run_info_metadata(
-    input_metadata_json_path, output_metadata_json_path, cloud_prefix, pub_internal, run_info_id
+    input_metadata_json_path,
+    output_metadata_json_path,
+    cloud_prefix,
+    pub_internal,
+    run_info_id,
 ):
     # Load input JSON data
     with open(input_metadata_json_path, "r") as infile:
@@ -38,7 +42,7 @@ def update_run_info_samplesheet(
     output_samplesheet_json_path,
     cloud_prefix,
     pub_internal,
-    run_info_id
+    run_info_id,
 ):
     # Load the JSON data
     with open(input_samplesheet_json_path, "r") as file:
@@ -89,12 +93,12 @@ if __name__ == "__main__":
         args.output_metadata_json_path,
         args.cloud_prefix,
         args.pub_internal,
-        args.run_info_id
+        args.run_info_id,
     )
     update_run_info_samplesheet(
         args.input_samplesheet_json_path,
         args.output_samplesheet_json_path,
         args.cloud_prefix,
         args.pub_internal,
-        args.run_info_id
+        args.run_info_id,
     )
