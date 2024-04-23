@@ -2,6 +2,8 @@
 // Subworkflow with functionality specific to the nf-core/fetchngs pipeline
 //
 
+import nextflow.extension.FilesEx
+
 /*
 ========================================================================================
     IMPORT MODULES/SUBWORKFLOWS
@@ -194,7 +196,7 @@ def writeWorkflowSummary(summary_params, outdir) {
     "nextflow-build": "${workflow.nextflow.build}",
     "nextflow-compile-timestamp": "${workflow.nextflow.timestamp}"\n}"""
 
-    def summaryFilePathjson = "${outdir}/workflow_summary_${pipeline_version}-${wf_timestamp}.json"
+    def summaryFilePathjson = "${workflow.launchDir}/workflow_summary_${pipeline_version}-${wf_timestamp}.json"
     File summaryFilejson = new File(summaryFilePathjson)
 
     // Write the JSON string to the file
@@ -205,6 +207,9 @@ def writeWorkflowSummary(summary_params, outdir) {
     } catch (IOException e) {
         println "Error writing to file: ${e.message}"
     }
+
+    FilesEx.copyTo(summaryFilejson.toPath(), "${outdir}/pipeline_info/workflow_summary_${pipeline_version}-${wf_timestamp}.json")
+    summaryFilejson.delete()
 }
 
 //
